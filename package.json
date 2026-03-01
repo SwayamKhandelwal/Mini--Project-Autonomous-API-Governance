@@ -1,0 +1,34 @@
+{
+  "name": "project42-governance",
+  "version": "1.0.0",
+  "description": "Autonomous API & Microservice Governance System",
+  "main": "gateway/index.js",
+  "scripts": {
+    "start": "node gateway/index.js",
+    "dev": "nodemon gateway/index.js",
+    "agent:discovery": "node agents/discovery/index.js",
+    "agent:dependency": "node agents/dependency/index.js",
+    "agent:security": "node agents/security/index.js",
+    "agent:performance": "node agents/performance/index.js",
+    "agent:refactoring": "node agents/refactoring/index.js",
+    "start:all": "concurrently \"npm run start\" \"npm run agent:discovery\" \"npm run agent:dependency\" \"npm run agent:security\" \"npm run agent:performance\" \"npm run agent:refactoring\""
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "kafkajs": "^2.2.4",
+    "neo4j-driver": "^5.18.0",
+    "dotenv": "^16.4.5",
+    "axios": "^1.6.8",
+    "winston": "^3.13.0",
+    "@google/generative-ai": "^0.15.0",
+    "uuid": "^9.0.1",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "express-rate-limit": "^7.2.0",
+    "prom-client": "^15.1.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0",
+    "concurrently": "^8.2.2"
+  }
+}
