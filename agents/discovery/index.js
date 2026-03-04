@@ -4,7 +4,7 @@ const axios = require('axios');
 const { v4: uuidv4 } = require('uuid');
 const logger = require('../../shared/logger');
 const { createConsumer, createProducer, publish, TOPICS } = require('../../shared/kafka');
-const { runQuery, initSchema } = require('../../shared/neo4j');
+const { runQuery } = require('../../shared/neo4j');
 
 const SERVICE_NAME = 'discovery-agent';
 
@@ -117,7 +117,7 @@ async function scanService(producer, { serviceName, baseUrl, environment }) {
 async function main() {
   logger.info('Starting API Discovery Agent...', { service: SERVICE_NAME });
 
-  await initSchema();
+  
 
   const producer = await createProducer();
   const consumer = await createConsumer('discovery-agent-group');

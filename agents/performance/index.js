@@ -3,7 +3,7 @@ require('dotenv').config();
 const { v4: uuidv4 } = require('uuid');
 const logger = require('../../shared/logger');
 const { createConsumer, createProducer, publish, TOPICS } = require('../../shared/kafka');
-const { runQuery, initSchema } = require('../../shared/neo4j');
+const { runQuery } = require('../../shared/neo4j');
 
 const SERVICE_NAME = 'performance-agent';
 
@@ -94,7 +94,7 @@ async function detectBottlenecks(producer) {
 async function main() {
   logger.info('Starting Performance Agent...', { service: SERVICE_NAME });
 
-  await initSchema();
+  
 
   const producer = await createProducer();
   const consumer = await createConsumer('performance-agent-group');

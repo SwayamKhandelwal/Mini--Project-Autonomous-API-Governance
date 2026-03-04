@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const logger = require('../../shared/logger');
 const { createConsumer, createProducer, publish, TOPICS } = require('../../shared/kafka');
-const { runQuery, initSchema } = require('../../shared/neo4j');
+const { runQuery } = require('../../shared/neo4j');
 
 const SERVICE_NAME = 'dependency-agent';
 
@@ -78,7 +78,7 @@ async function handleDependencyReport(producer, payload) {
 async function main() {
   logger.info('Starting Dependency Mapping Agent...', { service: SERVICE_NAME });
 
-  await initSchema();
+  
 
   const producer = await createProducer();
   const consumer = await createConsumer('dependency-agent-group');

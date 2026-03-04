@@ -1,8 +1,6 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  # ─── Infrastructure ──────────────────────────────────────────────────────
-
   zookeeper:
     image: confluentinc/cp-zookeeper:7.6.0
     environment:
@@ -21,7 +19,7 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
 
   neo4j:
     image: neo4j:5.18
@@ -29,8 +27,7 @@ services:
       - "7474:7474"
       - "7687:7687"
     environment:
-      NEO4J_AUTH: neo4j/your_password
-      NEO4J_PLUGINS: '["apoc"]'
+      NEO4J_AUTH: neo4j/StrongPassword123
     volumes:
       - neo4j_data:/data
 
@@ -41,7 +38,7 @@ services:
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
+      - "--config.file=/etc/prometheus/prometheus.yml"
 
   grafana:
     image: grafana/grafana:10.4.0
@@ -53,8 +50,6 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     volumes:
       - grafana_data:/var/lib/grafana
-
-  # ─── Project42 Services ──────────────────────────────────────────────────
 
   gateway:
     build: .

@@ -4,7 +4,7 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 const { v4: uuidv4 } = require('uuid');
 const logger = require('../../shared/logger');
 const { createConsumer, createProducer, publish, TOPICS } = require('../../shared/kafka');
-const { runQuery, initSchema } = require('../../shared/neo4j');
+const { runQuery } = require('../../shared/neo4j');
 
 const SERVICE_NAME = 'refactoring-agent';
 
@@ -107,7 +107,7 @@ Return ONLY valid JSON, no markdown.`;
 async function main() {
   logger.info('Starting Refactoring Agent...', { service: SERVICE_NAME });
 
-  await initSchema();
+  
 
   const producer = await createProducer();
   const consumer = await createConsumer('refactoring-agent-group');
