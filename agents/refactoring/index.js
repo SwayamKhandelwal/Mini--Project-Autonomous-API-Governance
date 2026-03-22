@@ -9,18 +9,15 @@ const { runQuery } = require('../../shared/neo4j');
 const SERVICE_NAME = 'refactoring-agent';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const geminiModel = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+const geminiModel = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
-/**
- * Gather full architecture context for LLM analysis
- */
 async function gatherArchitectureContext() {
   const [serviceRecords, apiRecords, securityRecords, perfRecords, depRecords] = await Promise.all([
-    runQuery(`MATCH (s:Service) RETURN s`),
-    runQuery(`MATCH (a:API) RETURN a LIMIT 100`),
-    runQuery(`MATCH (a:SecurityAlert) WHERE a.resolved = false RETURN a LIMIT 50`),
-    runQuery(`MATCH (a:API) WHERE a.avgLatencyMs > 500 OR a.errorRate > 0.05 RETURN a LIMIT 20`),
-    runQuery(`MATCH (s1:Service)-[r:CALLS]->(s2:Service) RETURN s1.name as from, s2.name as to, r`),
+    runQuery('MATCH (s:Service) RETURN s'),
+    runQuery('MATCH (a:API) RETURN a LIMIT 100'),
+    runQuery('MATCH (a:SecurityAlert) WHERE a.resolved = false RETURN a LIMIT 50'),
+    runQuery('MATCH (a:API) WHERE a.avgLatencyMs > 500 OR a.errorRate > 0.05 RETURN a LIMIT 20'),
+    runQuery('MATCH (s1:Service)-[r:CALLS]->(s2:Service) RETURN s1.name as from, s2.name as to, r'),
   ]);
 
   return {
@@ -36,68 +33,53 @@ async function gatherArchitectureContext() {
   };
 }
 
-/**
- * Use LLM to analyze architecture and generate refactoring suggestions
- */
 async function generateSuggestions(producer, context) {
   logger.info('Running LLM architecture analysis...', { service: SERVICE_NAME });
 
-  const prompt = `You are an expert software architect analyzing a microservice system.
+  const serviceNames = context.services.map((s) => s.name).join(', ') || 'none';
+  const alertCount = context.unresolvedAlerts.length;
+  const perfCount = context.problematicEndpoints.length;
+  const apiCount = context.apis.length;
 
-SYSTEM OVERVIEW:
-- Services: ${context.services.map((s) => s.name).join(', ')}
-- Total APIs discovered: ${context.apis.length}
-- Unresolved security alerts: ${context.unresolvedAlerts.length}
-- Problematic endpoints (high latency/error rate): ${context.problematicEndpoints.length}
+  const prompt = `You are a software architect. Return ONLY a JSON array with no markdown or extra text.
 
-SERVICE DEPENDENCIES:
-${context.dependencies.map((d) => `${d.from} -> ${d.to} (calls: ${d.callCount}, avgLatency: ${d.avgLatencyMs}ms)`).join('\n') || 'None mapped yet'}
+System: services=[${serviceNames}], apis=${apiCount}, security_alerts=${alertCount}, perf_issues=${perfCount}
 
-TOP SECURITY ISSUES:
-${context.unresolvedAlerts.slice(0, 5).map((a) => `[${a.severity}] ${a.ruleId}: ${a.endpoint}`).join('\n') || 'None'}
-
-PERFORMANCE BOTTLENECKS:
-${context.problematicEndpoints.map((e) => `${e.method} ${e.path} - latency: ${e.avgLatencyMs}ms, errorRate: ${(e.errorRate * 100).toFixed(1)}%`).join('\n') || 'None'}
-
-Based on this data, provide exactly 3 architectural refactoring suggestions in this JSON format:
-[
-  {
-    "title": "Short suggestion title",
-    "category": "security|performance|architecture|cleanup",
-    "priority": "high|medium|low",
-    "description": "Detailed explanation of the issue and recommendation",
-    "affectedServices": ["service1", "service2"],
-    "estimatedImpact": "Description of expected improvement"
-  }
-]
-
-Return ONLY valid JSON, no markdown.`;
+Return a JSON array of exactly 3 objects. Each object must have: title(max 5 words), category(security/performance/architecture/cleanup), priority(high/medium/low), description(max 20 words), affectedServices(array), estimatedImpact(max 10 words). No markdown. Only the array.`;
 
   try {
     const result = await geminiModel.generateContent({
       contents: [{ role: 'user', parts: [{ text: prompt }] }],
-      generationConfig: { temperature: 0.3, maxOutputTokens: 1500 },
+      generationConfig: { temperature: 0.2, maxOutputTokens: 2048 },
     });
 
-    const raw = result.response.text().trim().replace(/```json|```/g, '');
-    const suggestions = JSON.parse(raw);
+    let raw = result.response.text().trim();
+    raw = raw.replace(/```json/g, '').replace(/```/g, '').trim();
+
+    logger.info("Gemini raw response: " + raw, { service: SERVICE_NAME });
+    const jsonMatch = raw.match(/\[[\s\S]*\]/);
+    if (!jsonMatch) throw new Error('No JSON array found in Gemini response');
+
+    const suggestions = JSON.parse(jsonMatch[0]);
 
     for (const suggestion of suggestions) {
       const doc = {
         id: uuidv4(),
-        ...suggestion,
-        affectedServices: suggestion.affectedServices.join(','),
+        title: suggestion.title,
+        category: suggestion.category,
+        priority: suggestion.priority,
+        description: suggestion.description,
+        affectedServices: Array.isArray(suggestion.affectedServices)
+          ? suggestion.affectedServices.join(',')
+          : suggestion.affectedServices,
+        estimatedImpact: suggestion.estimatedImpact,
         status: 'pending',
         createdAt: new Date().toISOString(),
       };
 
-      // Store in Neo4j
-      await runQuery(`CREATE (s:RefactorSuggestion $props)`, { props: doc });
-
-      // Publish to Kafka
+      await runQuery('CREATE (s:RefactorSuggestion $props)', { props: doc });
       await publish(producer, TOPICS.REFACTOR_SUGGESTION, doc);
-
-      logger.info(`Refactoring suggestion generated: ${doc.title}`, { service: SERVICE_NAME });
+      logger.info(`Suggestion generated: ${doc.title}`, { service: SERVICE_NAME });
     }
   } catch (err) {
     logger.error('LLM analysis failed', { error: err.message, service: SERVICE_NAME });
@@ -106,8 +88,6 @@ Return ONLY valid JSON, no markdown.`;
 
 async function main() {
   logger.info('Starting Refactoring Agent...', { service: SERVICE_NAME });
-
-  
 
   const producer = await createProducer();
   const consumer = await createConsumer('refactoring-agent-group');
@@ -124,20 +104,19 @@ async function main() {
       try {
         const payload = JSON.parse(message.value.toString());
 
-        // Trigger analysis on critical events or explicit command
         const isCriticalAlert =
           (topic === TOPICS.SECURITY_ALERT && payload.severity === 'critical') ||
           (topic === TOPICS.PERFORMANCE_ISSUE && payload.severity === 'critical');
-        const isCommand = topic === TOPICS.GOVERNANCE_COMMAND && payload.command === 'RUN_REFACTOR_ANALYSIS';
+        const isCommand =
+          topic === TOPICS.GOVERNANCE_COMMAND && payload.command === 'RUN_REFACTOR_ANALYSIS';
 
         if ((isCriticalAlert && !pendingTrigger) || isCommand) {
           pendingTrigger = true;
-          // Debounce: wait 10s before triggering to batch events
           setTimeout(async () => {
             const context = await gatherArchitectureContext();
             await generateSuggestions(producer, context);
             pendingTrigger = false;
-          }, 10000);
+          }, 5000);
         }
       } catch (err) {
         logger.error('Error processing message', { error: err.message, service: SERVICE_NAME });

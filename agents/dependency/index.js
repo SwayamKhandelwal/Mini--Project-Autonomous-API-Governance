@@ -60,6 +60,8 @@ async function processDiscoveryEvent(producer, event) {
         });
       }
     }
+
+
   }
 }
 
@@ -78,7 +80,7 @@ async function handleDependencyReport(producer, payload) {
 async function main() {
   logger.info('Starting Dependency Mapping Agent...', { service: SERVICE_NAME });
 
-  
+
 
   const producer = await createProducer();
   const consumer = await createConsumer('dependency-agent-group');
