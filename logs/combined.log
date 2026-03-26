@@ -811,3 +811,333 @@
 2026-03-23 00:23:27 [32minfo[39m: [performance-agent] Bottleneck detection complete
 2026-03-23 00:23:27 [32minfo[39m: [discovery-agent] Scanning service: order-service @ http://localhost:8084
 2026-03-23 00:23:27 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for order-service
+2026-03-25 15:45:11 [32minfo[39m: [dependency-agent] Starting Dependency Mapping Agent...
+2026-03-25 15:45:11 [32minfo[39m: [refactoring-agent] Starting Refactoring Agent...
+2026-03-25 15:45:11 [32minfo[39m: [security-agent] Starting Security Analysis Agent...
+2026-03-25 15:45:11 [32minfo[39m: [discovery-agent] Starting API Discovery Agent...
+2026-03-25 15:45:11 [32minfo[39m: [performance-agent] Starting Performance Agent...
+2026-03-25 15:45:11 [32minfo[39m: [gateway] Initializing Project42 Gateway...
+2026-03-25 15:45:11 [32minfo[39m: Kafka producer connected
+2026-03-25 15:45:11 [32minfo[39m: Kafka producer connected
+2026-03-25 15:45:11 [32minfo[39m: Kafka producer connected
+2026-03-25 15:45:11 [32minfo[39m: Kafka producer connected
+2026-03-25 15:45:11 [32minfo[39m: Kafka producer connected
+2026-03-25 15:45:11 [32minfo[39m: Kafka consumer connected [group: performance-agent-group]
+2026-03-25 15:45:11 [32minfo[39m: Kafka consumer connected [group: dependency-agent-group]
+2026-03-25 15:45:11 [32minfo[39m: Kafka consumer connected [group: security-agent-group]
+2026-03-25 15:45:11 [32minfo[39m: Kafka consumer connected [group: discovery-agent-group]
+2026-03-25 15:45:11 [32minfo[39m: Kafka consumer connected [group: refactoring-agent-group]
+2026-03-25 15:45:11 [31merror[39m: Performance agent failed {"error":"This server does not host this topic-partition"}
+2026-03-25 15:45:11 [31merror[39m: Discovery agent failed {"error":"This server does not host this topic-partition"}
+2026-03-25 15:45:12 [31merror[39m: Dependency agent failed {"error":"This server does not host this topic-partition"}
+2026-03-25 15:45:12 [31merror[39m: Security agent failed {"error":"This server does not host this topic-partition"}
+2026-03-25 15:45:12 [31merror[39m: Refactoring agent failed {"error":"This server does not host this topic-partition"}
+2026-03-25 15:45:49 [32minfo[39m: [dependency-agent] Starting Dependency Mapping Agent...
+2026-03-25 15:45:49 [32minfo[39m: [performance-agent] Starting Performance Agent...
+2026-03-25 15:45:49 [32minfo[39m: Kafka producer connected
+2026-03-25 15:45:49 [32minfo[39m: Kafka consumer connected [group: dependency-agent-group]
+2026-03-25 15:45:49 [32minfo[39m: Kafka producer connected
+2026-03-25 15:45:49 [32minfo[39m: [refactoring-agent] Starting Refactoring Agent...
+2026-03-25 15:45:49 [32minfo[39m: Kafka consumer connected [group: performance-agent-group]
+2026-03-25 15:45:49 [32minfo[39m: Kafka producer connected
+2026-03-25 15:45:49 [32minfo[39m: Kafka consumer connected [group: refactoring-agent-group]
+2026-03-25 15:45:49 [32minfo[39m: [discovery-agent] Starting API Discovery Agent...
+2026-03-25 15:45:49 [32minfo[39m: [security-agent] Starting Security Analysis Agent...
+2026-03-25 15:45:49 [32minfo[39m: Kafka producer connected
+2026-03-25 15:45:49 [32minfo[39m: Kafka consumer connected [group: discovery-agent-group]
+2026-03-25 15:45:49 [32minfo[39m: Kafka producer connected
+2026-03-25 15:45:49 [32minfo[39m: Kafka consumer connected [group: security-agent-group]
+2026-03-25 15:45:50 [32minfo[39m: [gateway] Initializing Project42 Gateway...
+2026-03-25 15:45:50 [32minfo[39m: All Kafka topics already exist
+2026-03-25 15:45:50 [32minfo[39m: Neo4j driver initialized
+2026-03-25 15:45:54 [32minfo[39m: Neo4j schema initialized
+2026-03-25 15:45:54 [32minfo[39m: [gateway] Gateway running on http://localhost:3000
+2026-03-25 15:45:54 [32minfo[39m: [gateway] Metrics available at http://localhost:3000/metrics
+2026-03-25 15:45:57 [32minfo[39m: [performance-agent] Performance Agent is running
+2026-03-25 15:45:57 [32minfo[39m: [dependency-agent] Dependency Mapping Agent is running
+2026-03-25 15:45:57 [32minfo[39m: [security-agent] Security Analysis Agent is running
+2026-03-25 15:45:57 [32minfo[39m: [discovery-agent] API Discovery Agent is running
+2026-03-25 15:45:57 [32minfo[39m: [refactoring-agent] Refactoring Agent is running
+2026-03-25 15:46:13 [32minfo[39m: [gateway] GET /apis - 200
+2026-03-25 15:46:13 [32minfo[39m: [gateway] GET /bottlenecks - 200
+2026-03-25 15:46:13 [32minfo[39m: [gateway] GET /graph - 200
+2026-03-25 15:46:13 [32minfo[39m: [gateway] GET /alerts - 200
+2026-03-25 15:46:13 [32minfo[39m: [gateway] GET / - 200
+2026-03-25 15:46:13 [32minfo[39m: [gateway] GET /suggestions - 200
+2026-03-25 15:46:13 [32minfo[39m: [gateway] GET /unused - 200
+2026-03-25 15:46:40 [32minfo[39m: [gateway] GET /apis - 304
+2026-03-25 15:46:40 [32minfo[39m: [gateway] GET /graph - 304
+2026-03-25 15:46:40 [32minfo[39m: [gateway] GET / - 200
+2026-03-25 15:46:40 [32minfo[39m: [gateway] GET /alerts - 304
+2026-03-25 15:46:40 [32minfo[39m: [gateway] GET /bottlenecks - 304
+2026-03-25 15:46:40 [32minfo[39m: [gateway] GET /suggestions - 304
+2026-03-25 15:46:40 [32minfo[39m: [gateway] GET /unused - 304
+2026-03-25 15:46:57 [32minfo[39m: [discovery-agent] Running scheduled re-scan of all services...
+2026-03-25 15:46:57 [32minfo[39m: Neo4j driver initialized
+2026-03-25 15:46:57 [32minfo[39m: [discovery-agent] Scanning service: test-service @ http://localhost:8080
+2026-03-25 15:47:02 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for test-service
+2026-03-25 15:47:02 [32minfo[39m: [discovery-agent] Scanning service: auth-service @ http://localhost:8081
+2026-03-25 15:47:02 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for auth-service
+2026-03-25 15:47:02 [32minfo[39m: [discovery-agent] Scanning service: payment-service @ http://localhost:8082
+2026-03-25 15:47:02 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for payment-service
+2026-03-25 15:47:02 [32minfo[39m: [discovery-agent] Scanning service: user-service @ http://localhost:8083
+2026-03-25 15:47:02 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for user-service
+2026-03-25 15:47:02 [32minfo[39m: [discovery-agent] Scanning service: order-service @ http://localhost:8084
+2026-03-25 15:47:02 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for order-service
+2026-03-25 15:47:10 [32minfo[39m: [gateway] GET / - 200
+2026-03-25 15:47:10 [32minfo[39m: [gateway] GET /apis - 304
+2026-03-25 15:47:10 [32minfo[39m: [gateway] GET /alerts - 304
+2026-03-25 15:47:10 [32minfo[39m: [gateway] GET /graph - 304
+2026-03-25 15:47:10 [32minfo[39m: [gateway] GET /bottlenecks - 304
+2026-03-25 15:47:10 [32minfo[39m: [gateway] GET /suggestions - 304
+2026-03-25 15:47:11 [32minfo[39m: [gateway] GET /unused - 304
+2026-03-25 15:47:40 [32minfo[39m: [gateway] GET / - 200
+2026-03-25 15:47:40 [32minfo[39m: [gateway] GET /apis - 304
+2026-03-25 15:47:40 [32minfo[39m: [gateway] GET /alerts - 304
+2026-03-25 15:47:41 [32minfo[39m: [gateway] GET /suggestions - 304
+2026-03-25 15:47:41 [32minfo[39m: [gateway] GET /bottlenecks - 304
+2026-03-25 15:47:41 [32minfo[39m: [gateway] GET /unused - 304
+2026-03-25 15:47:41 [32minfo[39m: [gateway] GET /graph - 304
+2026-03-25 15:47:57 [32minfo[39m: Neo4j driver initialized
+2026-03-25 15:47:57 [32minfo[39m: [discovery-agent] Running scheduled re-scan of all services...
+2026-03-25 15:47:57 [32minfo[39m: [discovery-agent] Scanning service: test-service @ http://localhost:8080
+2026-03-25 15:47:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for test-service
+2026-03-25 15:47:57 [32minfo[39m: [discovery-agent] Scanning service: auth-service @ http://localhost:8081
+2026-03-25 15:47:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for auth-service
+2026-03-25 15:47:57 [32minfo[39m: [discovery-agent] Scanning service: payment-service @ http://localhost:8082
+2026-03-25 15:47:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for payment-service
+2026-03-25 15:47:57 [32minfo[39m: [discovery-agent] Scanning service: user-service @ http://localhost:8083
+2026-03-25 15:47:58 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for user-service
+2026-03-25 15:47:58 [32minfo[39m: [discovery-agent] Scanning service: order-service @ http://localhost:8084
+2026-03-25 15:47:58 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for order-service
+2026-03-25 15:47:58 [32minfo[39m: [performance-agent] Bottleneck detection complete
+2026-03-25 15:48:10 [32minfo[39m: [gateway] GET / - 200
+2026-03-25 15:48:10 [32minfo[39m: [gateway] GET /apis - 304
+2026-03-25 15:48:10 [32minfo[39m: [gateway] GET /alerts - 304
+2026-03-25 15:48:10 [32minfo[39m: [gateway] GET /graph - 304
+2026-03-25 15:48:10 [32minfo[39m: [gateway] GET /suggestions - 304
+2026-03-25 15:48:10 [32minfo[39m: [gateway] GET /unused - 304
+2026-03-25 15:48:10 [32minfo[39m: [gateway] GET /bottlenecks - 304
+2026-03-25 15:48:40 [32minfo[39m: [gateway] GET / - 200
+2026-03-25 15:48:40 [32minfo[39m: [gateway] GET /apis - 304
+2026-03-25 15:48:40 [32minfo[39m: [gateway] GET /alerts - 304
+2026-03-25 15:48:40 [32minfo[39m: [gateway] GET /suggestions - 304
+2026-03-25 15:48:40 [32minfo[39m: [gateway] GET /graph - 304
+2026-03-25 15:48:40 [32minfo[39m: [gateway] GET /bottlenecks - 304
+2026-03-25 15:48:40 [32minfo[39m: [gateway] GET /unused - 304
+2026-03-25 15:48:57 [32minfo[39m: [discovery-agent] Running scheduled re-scan of all services...
+2026-03-25 15:48:57 [32minfo[39m: [discovery-agent] Scanning service: test-service @ http://localhost:8080
+2026-03-25 15:48:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for test-service
+2026-03-25 15:48:57 [32minfo[39m: [discovery-agent] Scanning service: auth-service @ http://localhost:8081
+2026-03-25 15:48:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for auth-service
+2026-03-25 15:48:57 [32minfo[39m: [discovery-agent] Scanning service: payment-service @ http://localhost:8082
+2026-03-25 15:48:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for payment-service
+2026-03-25 15:48:57 [32minfo[39m: [discovery-agent] Scanning service: user-service @ http://localhost:8083
+2026-03-25 15:48:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for user-service
+2026-03-25 15:48:57 [32minfo[39m: [discovery-agent] Scanning service: order-service @ http://localhost:8084
+2026-03-25 15:48:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for order-service
+2026-03-25 15:49:10 [32minfo[39m: [gateway] GET /apis - 304
+2026-03-25 15:49:10 [32minfo[39m: [gateway] GET /alerts - 304
+2026-03-25 15:49:10 [32minfo[39m: [gateway] GET / - 200
+2026-03-25 15:49:10 [32minfo[39m: [gateway] GET /suggestions - 304
+2026-03-25 15:49:10 [32minfo[39m: [gateway] GET /graph - 304
+2026-03-25 15:49:10 [32minfo[39m: [gateway] GET /bottlenecks - 304
+2026-03-25 15:49:10 [32minfo[39m: [gateway] GET /unused - 304
+2026-03-25 15:49:40 [32minfo[39m: [gateway] GET /alerts - 304
+2026-03-25 15:49:40 [32minfo[39m: [gateway] GET /apis - 304
+2026-03-25 15:49:40 [32minfo[39m: [gateway] GET / - 200
+2026-03-25 15:49:40 [32minfo[39m: [gateway] GET /graph - 304
+2026-03-25 15:49:40 [32minfo[39m: [gateway] GET /suggestions - 304
+2026-03-25 15:49:40 [32minfo[39m: [gateway] GET /bottlenecks - 304
+2026-03-25 15:49:40 [32minfo[39m: [gateway] GET /unused - 304
+2026-03-25 15:49:57 [32minfo[39m: [performance-agent] Bottleneck detection complete
+2026-03-25 15:49:57 [32minfo[39m: [discovery-agent] Running scheduled re-scan of all services...
+2026-03-25 15:49:57 [32minfo[39m: [discovery-agent] Scanning service: test-service @ http://localhost:8080
+2026-03-25 15:49:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for test-service
+2026-03-25 15:49:57 [32minfo[39m: [discovery-agent] Scanning service: auth-service @ http://localhost:8081
+2026-03-25 15:49:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for auth-service
+2026-03-25 15:49:57 [32minfo[39m: [discovery-agent] Scanning service: payment-service @ http://localhost:8082
+2026-03-25 15:49:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for payment-service
+2026-03-25 15:49:57 [32minfo[39m: [discovery-agent] Scanning service: user-service @ http://localhost:8083
+2026-03-25 15:49:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for user-service
+2026-03-25 15:49:57 [32minfo[39m: [discovery-agent] Scanning service: order-service @ http://localhost:8084
+2026-03-25 15:49:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for order-service
+2026-03-25 15:50:01 [32minfo[39m: [gateway] GET / - 200
+2026-03-25 15:50:14 [32minfo[39m: Kafka producer connected
+2026-03-25 15:50:14 [32minfo[39m: [discovery-route] Service registered: auth-service
+2026-03-25 15:50:14 [32minfo[39m: [gateway] POST /register - 201
+2026-03-25 15:50:14 [32minfo[39m: [discovery-agent] Scanning service: auth-service @ http://localhost:8081
+2026-03-25 15:50:14 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for auth-service
+2026-03-25 15:50:16 [32minfo[39m: Kafka producer connected
+2026-03-25 15:50:16 [32minfo[39m: [discovery-route] Service registered: payment-service
+2026-03-25 15:50:16 [32minfo[39m: [gateway] POST /register - 201
+2026-03-25 15:50:16 [32minfo[39m: [discovery-agent] Scanning service: payment-service @ http://localhost:8082
+2026-03-25 15:50:16 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for payment-service
+2026-03-25 15:50:18 [32minfo[39m: [gateway] GET /alerts - 304
+2026-03-25 15:50:18 [32minfo[39m: [gateway] GET / - 200
+2026-03-25 15:50:18 [32minfo[39m: [gateway] GET /apis - 304
+2026-03-25 15:50:18 [32minfo[39m: [gateway] GET /suggestions - 304
+2026-03-25 15:50:18 [32minfo[39m: [gateway] GET /bottlenecks - 304
+2026-03-25 15:50:18 [32minfo[39m: [gateway] GET /graph - 304
+2026-03-25 15:50:18 [32minfo[39m: [gateway] GET /unused - 304
+2026-03-25 15:50:23 [32minfo[39m: [gateway] GET /apis - 304
+2026-03-25 15:50:23 [32minfo[39m: [gateway] GET /alerts - 304
+2026-03-25 15:50:23 [32minfo[39m: [gateway] GET /bottlenecks - 304
+2026-03-25 15:50:23 [32minfo[39m: [gateway] GET /graph - 304
+2026-03-25 15:50:23 [32minfo[39m: [gateway] GET /suggestions - 304
+2026-03-25 15:50:23 [32minfo[39m: [gateway] GET / - 200
+2026-03-25 15:50:23 [32minfo[39m: [gateway] GET /unused - 304
+2026-03-25 15:50:40 [32minfo[39m: [gateway] GET / - 200
+2026-03-25 15:50:41 [32minfo[39m: [gateway] GET /apis - 304
+2026-03-25 15:50:41 [32minfo[39m: [gateway] GET /alerts - 304
+2026-03-25 15:50:41 [32minfo[39m: [gateway] GET /suggestions - 304
+2026-03-25 15:50:41 [32minfo[39m: [gateway] GET /unused - 304
+2026-03-25 15:50:41 [32minfo[39m: [gateway] GET /bottlenecks - 304
+2026-03-25 15:50:41 [32minfo[39m: [gateway] GET /graph - 304
+2026-03-25 15:50:53 [32minfo[39m: [gateway] GET / - 200
+2026-03-25 15:50:53 [32minfo[39m: [gateway] GET /apis - 304
+2026-03-25 15:50:53 [32minfo[39m: [gateway] GET /alerts - 304
+2026-03-25 15:50:53 [32minfo[39m: [gateway] GET /suggestions - 304
+2026-03-25 15:50:53 [32minfo[39m: [gateway] GET /graph - 304
+2026-03-25 15:50:53 [32minfo[39m: [gateway] GET /bottlenecks - 304
+2026-03-25 15:50:53 [32minfo[39m: [gateway] GET /unused - 304
+2026-03-25 15:50:57 [32minfo[39m: [security-agent] Running full security scan...
+2026-03-25 15:50:57 [32minfo[39m: [discovery-agent] Running scheduled re-scan of all services...
+2026-03-25 15:50:57 [32minfo[39m: Neo4j driver initialized
+2026-03-25 15:50:57 [32minfo[39m: [discovery-agent] Scanning service: test-service @ http://localhost:8080
+2026-03-25 15:50:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for test-service
+2026-03-25 15:50:57 [32minfo[39m: [discovery-agent] Scanning service: auth-service @ http://localhost:8081
+2026-03-25 15:50:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for auth-service
+2026-03-25 15:50:57 [32minfo[39m: [discovery-agent] Scanning service: payment-service @ http://localhost:8082
+2026-03-25 15:50:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for payment-service
+2026-03-25 15:50:57 [32minfo[39m: [discovery-agent] Scanning service: user-service @ http://localhost:8083
+2026-03-25 15:50:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for user-service
+2026-03-25 15:50:57 [32minfo[39m: [discovery-agent] Scanning service: order-service @ http://localhost:8084
+2026-03-25 15:50:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for order-service
+2026-03-25 15:50:58 [32minfo[39m: [security-agent] Security scan complete: 0 endpoints analyzed
+2026-03-25 15:51:10 [32minfo[39m: [gateway] GET / - 200
+2026-03-25 15:51:10 [32minfo[39m: [gateway] GET /apis - 304
+2026-03-25 15:51:10 [32minfo[39m: [gateway] GET /alerts - 304
+2026-03-25 15:51:10 [32minfo[39m: [gateway] GET /suggestions - 304
+2026-03-25 15:51:10 [32minfo[39m: [gateway] GET /graph - 304
+2026-03-25 15:51:10 [32minfo[39m: [gateway] GET /bottlenecks - 304
+2026-03-25 15:51:10 [32minfo[39m: [gateway] GET /unused - 304
+2026-03-25 15:51:18 [32minfo[39m: Kafka producer connected
+2026-03-25 15:51:18 [32minfo[39m: [refactoring-route] Refactor analysis triggered manually
+2026-03-25 15:51:18 [32minfo[39m: [gateway] POST /trigger - 200
+2026-03-25 15:51:23 [32minfo[39m: Neo4j driver initialized
+2026-03-25 15:51:23 [32minfo[39m: [refactoring-agent] Running LLM architecture analysis...
+2026-03-25 15:51:29 [32minfo[39m: [refactoring-agent] Gemini raw response: [{"title": "Microservice Communication Strategy", "category": "architecture", "priority": "high", "description": "Define clear inter-service communication patterns for scalability.", "affectedServices": ["auth-service", "payment-service", "user-service", "order-service"], "estimatedImpact": "Improved scalability and maintainability."}, {"title": "Remove Test Service", "category": "cleanup", "priority": "medium", "description": "The 'test-service' is no longer needed in production environment.", "affectedServices": ["test-service"], "estimatedImpact": "Reduced operational overhead."}, {"title": "API Gateway Implementation", "category": "architecture", "priority": "high", "description": "Centralize API entry point for routing and security.", "affectedServices": ["auth-service", "payment-service", "user-service", "order-service"], "estimatedImpact": "Enhanced security and simplified client access."}]
+2026-03-25 15:51:30 [32minfo[39m: [refactoring-agent] Suggestion generated: Microservice Communication Strategy
+2026-03-25 15:51:30 [32minfo[39m: [refactoring-agent] Suggestion generated: Remove Test Service
+2026-03-25 15:51:30 [32minfo[39m: [refactoring-agent] Suggestion generated: API Gateway Implementation
+2026-03-25 15:51:33 [32minfo[39m: [gateway] GET / - 200
+2026-03-25 15:51:33 [32minfo[39m: [gateway] GET /apis - 304
+2026-03-25 15:51:33 [32minfo[39m: [gateway] GET /alerts - 304
+2026-03-25 15:51:33 [32minfo[39m: [gateway] GET /graph - 304
+2026-03-25 15:51:33 [32minfo[39m: [gateway] GET /bottlenecks - 304
+2026-03-25 15:51:33 [32minfo[39m: [gateway] GET /suggestions - 200
+2026-03-25 15:51:33 [32minfo[39m: [gateway] GET /unused - 304
+2026-03-25 15:51:40 [32minfo[39m: [gateway] GET / - 200
+2026-03-25 15:51:40 [32minfo[39m: [gateway] GET /apis - 304
+2026-03-25 15:51:40 [32minfo[39m: [gateway] GET /alerts - 304
+2026-03-25 15:51:40 [32minfo[39m: [gateway] GET /suggestions - 304
+2026-03-25 15:51:40 [32minfo[39m: [gateway] GET /graph - 304
+2026-03-25 15:51:40 [32minfo[39m: [gateway] GET /bottlenecks - 304
+2026-03-25 15:51:40 [32minfo[39m: [gateway] GET /unused - 304
+2026-03-25 15:51:57 [32minfo[39m: [performance-agent] Bottleneck detection complete
+2026-03-25 15:51:57 [32minfo[39m: [discovery-agent] Running scheduled re-scan of all services...
+2026-03-25 15:51:57 [32minfo[39m: [discovery-agent] Scanning service: test-service @ http://localhost:8080
+2026-03-25 15:51:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for test-service
+2026-03-25 15:51:57 [32minfo[39m: [discovery-agent] Scanning service: auth-service @ http://localhost:8081
+2026-03-25 15:51:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for auth-service
+2026-03-25 15:51:57 [32minfo[39m: [discovery-agent] Scanning service: payment-service @ http://localhost:8082
+2026-03-25 15:51:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for payment-service
+2026-03-25 15:51:57 [32minfo[39m: [discovery-agent] Scanning service: user-service @ http://localhost:8083
+2026-03-25 15:51:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for user-service
+2026-03-25 15:51:57 [32minfo[39m: [discovery-agent] Scanning service: order-service @ http://localhost:8084
+2026-03-25 15:51:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for order-service
+2026-03-25 15:52:10 [32minfo[39m: [gateway] GET / - 200
+2026-03-25 15:52:10 [32minfo[39m: [gateway] GET /apis - 304
+2026-03-25 15:52:11 [32minfo[39m: [gateway] GET /alerts - 304
+2026-03-25 15:52:11 [32minfo[39m: [gateway] GET /bottlenecks - 304
+2026-03-25 15:52:11 [32minfo[39m: [gateway] GET /graph - 304
+2026-03-25 15:52:11 [32minfo[39m: [gateway] GET /unused - 304
+2026-03-25 15:52:11 [32minfo[39m: [gateway] GET /suggestions - 304
+2026-03-25 15:52:40 [32minfo[39m: [gateway] GET / - 200
+2026-03-25 15:52:40 [32minfo[39m: [gateway] GET /apis - 304
+2026-03-25 15:52:40 [32minfo[39m: [gateway] GET /alerts - 304
+2026-03-25 15:52:40 [32minfo[39m: [gateway] GET /suggestions - 304
+2026-03-25 15:52:40 [32minfo[39m: [gateway] GET /graph - 304
+2026-03-25 15:52:40 [32minfo[39m: [gateway] GET /bottlenecks - 304
+2026-03-25 15:52:40 [32minfo[39m: [gateway] GET /unused - 304
+2026-03-25 15:52:57 [32minfo[39m: [discovery-agent] Running scheduled re-scan of all services...
+2026-03-25 15:52:57 [32minfo[39m: [discovery-agent] Scanning service: test-service @ http://localhost:8080
+2026-03-25 15:52:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for test-service
+2026-03-25 15:52:57 [32minfo[39m: [discovery-agent] Scanning service: auth-service @ http://localhost:8081
+2026-03-25 15:52:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for auth-service
+2026-03-25 15:52:57 [32minfo[39m: [discovery-agent] Scanning service: payment-service @ http://localhost:8082
+2026-03-25 15:52:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for payment-service
+2026-03-25 15:52:57 [32minfo[39m: [discovery-agent] Scanning service: user-service @ http://localhost:8083
+2026-03-25 15:52:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for user-service
+2026-03-25 15:52:57 [32minfo[39m: [discovery-agent] Scanning service: order-service @ http://localhost:8084
+2026-03-25 15:52:58 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for order-service
+2026-03-25 15:53:10 [32minfo[39m: [gateway] GET / - 200
+2026-03-25 15:53:10 [32minfo[39m: [gateway] GET /alerts - 304
+2026-03-25 15:53:10 [32minfo[39m: [gateway] GET /apis - 304
+2026-03-25 15:53:11 [32minfo[39m: [gateway] GET /bottlenecks - 304
+2026-03-25 15:53:11 [32minfo[39m: [gateway] GET /suggestions - 304
+2026-03-25 15:53:11 [32minfo[39m: [gateway] GET /unused - 304
+2026-03-25 15:53:11 [32minfo[39m: [gateway] GET /graph - 304
+2026-03-25 15:53:11 [32minfo[39m: [gateway] GET /graph - 200
+2026-03-25 15:53:20 [32minfo[39m: [gateway] GET / - 200
+2026-03-25 15:53:20 [32minfo[39m: [gateway] GET /alerts - 304
+2026-03-25 15:53:20 [32minfo[39m: [gateway] GET /apis - 304
+2026-03-25 15:53:20 [32minfo[39m: [gateway] GET /suggestions - 304
+2026-03-25 15:53:20 [32minfo[39m: [gateway] GET /graph - 304
+2026-03-25 15:53:21 [32minfo[39m: [gateway] GET /bottlenecks - 304
+2026-03-25 15:53:21 [32minfo[39m: [gateway] GET /unused - 304
+2026-03-25 15:53:40 [32minfo[39m: [gateway] GET / - 200
+2026-03-25 15:53:40 [32minfo[39m: [gateway] GET /apis - 304
+2026-03-25 15:53:40 [32minfo[39m: [gateway] GET /alerts - 304
+2026-03-25 15:53:41 [32minfo[39m: [gateway] GET /suggestions - 304
+2026-03-25 15:53:41 [32minfo[39m: [gateway] GET /graph - 304
+2026-03-25 15:53:41 [32minfo[39m: [gateway] GET /bottlenecks - 304
+2026-03-25 15:53:41 [32minfo[39m: [gateway] GET /unused - 304
+2026-03-25 15:53:57 [32minfo[39m: [performance-agent] Bottleneck detection complete
+2026-03-25 15:53:57 [32minfo[39m: [discovery-agent] Running scheduled re-scan of all services...
+2026-03-25 15:53:57 [32minfo[39m: [discovery-agent] Scanning service: test-service @ http://localhost:8080
+2026-03-25 15:53:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for test-service
+2026-03-25 15:53:57 [32minfo[39m: [discovery-agent] Scanning service: auth-service @ http://localhost:8081
+2026-03-25 15:53:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for auth-service
+2026-03-25 15:53:57 [32minfo[39m: [discovery-agent] Scanning service: payment-service @ http://localhost:8082
+2026-03-25 15:53:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for payment-service
+2026-03-25 15:53:57 [32minfo[39m: [discovery-agent] Scanning service: user-service @ http://localhost:8083
+2026-03-25 15:53:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for user-service
+2026-03-25 15:53:57 [32minfo[39m: [discovery-agent] Scanning service: order-service @ http://localhost:8084
+2026-03-25 15:53:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for order-service
+2026-03-25 15:54:10 [32minfo[39m: [gateway] GET / - 200
+2026-03-25 15:54:10 [32minfo[39m: [gateway] GET /alerts - 304
+2026-03-25 15:54:10 [32minfo[39m: [gateway] GET /apis - 304
+2026-03-25 15:54:10 [32minfo[39m: [gateway] GET /suggestions - 304
+2026-03-25 15:54:10 [32minfo[39m: [gateway] GET /graph - 304
+2026-03-25 15:54:10 [32minfo[39m: [gateway] GET /bottlenecks - 304
+2026-03-25 15:54:10 [32minfo[39m: [gateway] GET /unused - 304
+2026-03-25 15:54:40 [32minfo[39m: [gateway] GET / - 200
+2026-03-25 15:54:40 [32minfo[39m: [gateway] GET /apis - 304
+2026-03-25 15:54:40 [32minfo[39m: [gateway] GET /alerts - 304
+2026-03-25 15:54:40 [32minfo[39m: [gateway] GET /graph - 304
+2026-03-25 15:54:40 [32minfo[39m: [gateway] GET /bottlenecks - 304
+2026-03-25 15:54:40 [32minfo[39m: [gateway] GET /suggestions - 304
+2026-03-25 15:54:40 [32minfo[39m: [gateway] GET /unused - 304
+2026-03-25 15:54:57 [32minfo[39m: [discovery-agent] Running scheduled re-scan of all services...
+2026-03-25 15:54:57 [32minfo[39m: [discovery-agent] Scanning service: test-service @ http://localhost:8080
+2026-03-25 15:54:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for test-service
+2026-03-25 15:54:57 [32minfo[39m: [discovery-agent] Scanning service: auth-service @ http://localhost:8081
+2026-03-25 15:54:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for auth-service
+2026-03-25 15:54:57 [32minfo[39m: [discovery-agent] Scanning service: payment-service @ http://localhost:8082
+2026-03-25 15:54:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for payment-service
+2026-03-25 15:54:57 [32minfo[39m: [discovery-agent] Scanning service: user-service @ http://localhost:8083
+2026-03-25 15:54:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for user-service
+2026-03-25 15:54:57 [32minfo[39m: [discovery-agent] Scanning service: order-service @ http://localhost:8084
+2026-03-25 15:54:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for order-service

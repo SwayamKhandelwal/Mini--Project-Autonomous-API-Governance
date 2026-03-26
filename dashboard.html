@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Project 42 — Governance Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.development.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.development.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080c12;
+      --bg2: #0d1520;
+      --bg3: #111d2e;
+      --border: #1a2e45;
+      --accent: #00d4ff;
+      --accent2: #ff4d6d;
+      --accent3: #39ff9a;
+      --text: #e2eaf4;
+      --text2: #6b8aaa;
+      --warn: #ffb347;
+      --mono: 'Space Mono', monospace;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Animated grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    #root { position: relative; z-index: 1; }
+
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 32px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(8,12,18,0.95);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-badge {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--accent), #0090cc);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--bg);
+    }
+
+    .logo-text {
+      font-family: var(--mono);
+      font-size: 15px;
+      letter-spacing: 0.08em;
+      color: var(--text);
+    }
+
+    .logo-sub {
+      font-size: 11px;
+      color: var(--text2);
+      letter-spacing: 0.05em;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .status-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      font-size: 12px;
+      font-family: var(--mono);
+      background: var(--bg2);
+    }
+
+    .status-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    .status-dot.green { background: var(--accent3); box-shadow: 0 0 8px var(--accent3); }
+    .status-dot.red { background: var(--accent2); box-shadow: 0 0 8px var(--accent2); animation: none; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .refresh-btn {
+      padding: 7px 16px;
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      border-radius: 6px;
+      font-family: var(--mono);
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.05em;
+    }
+    .refresh-btn:hover { background: var(--accent); color: var(--bg); }
+
+    /* Nav tabs */
+    .nav {
+      display: flex;
+      gap: 2px;
+      padding: 16px 32px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-tab {
+      padding: 10px 20px;
+      border: none;
+      background: transparent;
+      color: var(--text2);
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+      text-transform: uppercase;
+    }
+
+    .nav-tab:hover { color: var(--text); }
+    .nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    /* Main layout */
+    .main { padding: 28px 32px; }
+
+    /* Stats row */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .stat-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .stat-card:hover { border-color: var(--accent); }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+    }
+
+    .stat-card.blue::before { background: linear-gradient(90deg, var(--accent), transparent); }
+    .stat-card.red::before { background: linear-gradient(90deg, var(--accent2), transparent); }
+    .stat-card.green::before { background: linear-gradient(90deg, var(--accent3), transparent); }
+    .stat-card.warn::before { background: linear-gradient(90deg, var(--warn), transparent); }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--text2);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-family: var(--mono);
+      margin-bottom: 10px;
+    }
+
+    .stat-value {
+      font-size: 36px;
+      font-family: var(--mono);
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-value.blue { color: var(--accent); }
+    .stat-value.red { color: var(--accent2); }
+    .stat-value.green { color: var(--accent3); }
+    .stat-value.warn { color: var(--warn); }
+
+    .stat-sub { font-size: 12px; color: var(--text2); }
+
+    /* Section */
+    .section-title {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text2);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Two col layout */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .three-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    /* Card */
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-title {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      color: var(--text2);
+      text-transform: uppercase;
+    }
+
+    .card-count {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent);
+    }
+
+    .card-body { padding: 16px 18px; }
+
+    /* Service list */
+    .service-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin-bottom: 8px;
+      background: var(--bg3);
+      transition: border-color 0.2s;
+    }
+
+    .service-item:hover { border-color: var(--accent); }
+
+    .service-name {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    .service-env {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: rgba(0,212,255,0.1);
+      color: var(--accent);
+      font-family: var(--mono);
+    }
+
+    /* Alert items */
+    .alert-item {
+      padding: 10px 12px;
+      border-radius: 8px;
+      border-left: 3px solid;
+      margin-bottom: 8px;
+      background: var(--bg3);
+    }
+
+    .alert-item.critical { border-color: var(--accent2); }
+    .alert-item.high { border-color: var(--warn); }
+    .alert-item.medium { border-color: #7b68ee; }
+    .alert-item.low { border-color: var(--text2); }
+
+    .alert-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+
+    .alert-rule {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text);
+    }
+
+    .severity-badge {
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-family: var(--mono);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .severity-badge.critical { background: rgba(255,77,109,0.2); color: var(--accent2); }
+    .severity-badge.high { background: rgba(255,179,71,0.2); color: var(--warn); }
+    .severity-badge.medium { background: rgba(123,104,238,0.2); color: #7b68ee; }
+    .severity-badge.low { background: rgba(107,138,170,0.2); color: var(--text2); }
+
+    .alert-endpoint {
+      font-size: 11px;
+      color: var(--text2);
+      font-family: var(--mono);
+    }
+
+    /* Suggestions */
+    .suggestion-item {
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin-bottom: 10px;
+      background: var(--bg3);
+      transition: border-color 0.2s;
+    }
+
+    .suggestion-item:hover { border-color: var(--accent); }
+
+    .suggestion-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .suggestion-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .suggestion-desc {
+      font-size: 13px;
+      color: var(--text2);
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .suggestion-footer {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: var(--mono);
+      background: rgba(0,212,255,0.08);
+      color: var(--accent);
+      border: 1px solid rgba(0,212,255,0.2);
+    }
+
+    .tag.green {
+      background: rgba(57,255,154,0.08);
+      color: var(--accent3);
+      border-color: rgba(57,255,154,0.2);
+    }
+
+    .impact-text {
+      font-size: 11px;
+      color: var(--accent3);
+      font-style: italic;
+    }
+
+    /* Action buttons */
+    .btn-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .btn {
+      padding: 5px 12px;
+      border-radius: 5px;
+      font-size: 12px;
+      font-family: var(--mono);
+      cursor: pointer;
+      border: 1px solid;
+      transition: all 0.2s;
+    }
+
+    .btn-accept {
+      border-color: var(--accent3);
+      color: var(--accent3);
+      background: transparent;
+    }
+    .btn-accept:hover { background: var(--accent3); color: var(--bg); }
+
+    .btn-dismiss {
+      border-color: var(--border);
+      color: var(--text2);
+      background: transparent;
+    }
+    .btn-dismiss:hover { border-color: var(--accent2); color: var(--accent2); }
+
+    /* Graph visualization */
+    .graph-container {
+      background: var(--bg3);
+      border-radius: 8px;
+      padding: 20px;
+      min-height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .graph-node {
+      position: absolute;
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      background: rgba(0,212,255,0.08);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--accent);
+      text-align: center;
+      padding: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    .graph-node:hover {
+      background: rgba(0,212,255,0.18);
+      transform: scale(1.08);
+      z-index: 10;
+    }
+
+    .graph-node-icon { font-size: 20px; margin-bottom: 4px; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Empty state */
+    .empty {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text2);
+      font-size: 13px;
+      font-family: var(--mono);
+    }
+
+    .empty-icon { font-size: 32px; margin-bottom: 10px; }
+
+    /* Loading */
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      gap: 8px;
+      color: var(--text2);
+      font-family: var(--mono);
+      font-size: 13px;
+    }
+
+    .spinner {
+      width: 18px; height: 18px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Scrollable list */
+    .scroll-list { max-height: 320px; overflow-y: auto; padding-right: 4px; }
+    .scroll-list::-webkit-scrollbar { width: 4px; }
+    .scroll-list::-webkit-scrollbar-track { background: var(--bg); }
+    .scroll-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+    /* Register form */
+    .form-row { display: flex; gap: 10px; margin-bottom: 16px; }
+
+    .form-input {
+      flex: 1;
+      padding: 9px 12px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 12px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-input:focus { border-color: var(--accent); }
+    .form-input::placeholder { color: var(--text2); }
+
+    .btn-primary {
+      padding: 9px 18px;
+      background: var(--accent);
+      border: none;
+      border-radius: 6px;
+      color: var(--bg);
+      font-family: var(--mono);
+      font-size: 12px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: opacity 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .success-msg {
+      font-size: 12px;
+      color: var(--accent3);
+      font-family: var(--mono);
+      padding: 8px 12px;
+      background: rgba(57,255,154,0.08);
+      border-radius: 6px;
+      border: 1px solid rgba(57,255,154,0.2);
+      margin-top: 8px;
+    }
+
+    /* Timestamp */
+    .timestamp {
+      font-size: 11px;
+      color: var(--text2);
+      font-family: var(--mono);
+    }
+
+    /* Dependency graph SVG */
+    svg.dep-graph { width: 100%; height: 280px; }
+    .dep-node circle { fill: rgba(0,212,255,0.1); stroke: var(--accent); stroke-width: 1.5; }
+    .dep-node text { fill: var(--accent); font-family: 'Space Mono', monospace; font-size: 10px; text-anchor: middle; }
+    .dep-link { stroke: var(--border); stroke-width: 1.5; fill: none; marker-end: url(#arrow); }
+
+    @media (max-width: 1100px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .two-col, .three-col { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useEffect, useCallback } = React;
+
+const API = 'http://localhost:3000';
+
+async function apiFetch(path) {
+  try {
+    const res = await fetch(`${API}${path}`);
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
+// ── Stat Card ──────────────────────────────────────────────
+function StatCard({ label, value, sub, color }) {
+  return (
+    <div className={`stat-card ${color}`}>
+      <div className="stat-label">{label}</div>
+      <div className={`stat-value ${color}`}>{value ?? '—'}</div>
+      {sub && <div className="stat-sub">{sub}</div>}
+    </div>
+  );
+}
+
+// ── Dependency Graph ───────────────────────────────────────
+function DepGraph({ nodes, edges }) {
+  if (!nodes.length) return (
+    <div className="empty"><div className="empty-icon">🕸️</div>No dependencies mapped yet</div>
+  );
+
+  const cx = 420, cy = 140, r = 100;
+  const positions = nodes.map((n, i) => {
+    const angle = (2 * Math.PI * i) / nodes.length - Math.PI / 2;
+    return { id: n.id, x: cx + r * Math.cos(angle), y: cy + r * Math.sin(angle) };
+  });
+
+  const getPos = (id) => positions.find(p => p.id === id) || { x: cx, y: cy };
+
+  return (
+    <svg className="dep-graph" viewBox="0 0 840 280">
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#1a2e45"/>
+        </marker>
+      </defs>
+      {edges.map((e, i) => {
+        const s = getPos(e.source), t = getPos(e.target);
+        return <line key={i} className="dep-link" x1={s.x} y1={s.y} x2={t.x} y2={t.y}/>;
+      })}
+      {positions.map((p, i) => (
+        <g key={p.id} className="dep-node" transform={`translate(${p.x},${p.y})`}>
+          <circle r="32"/>
+          <text y="4">{p.id.replace('-service','')}</text>
+        </g>
+      ))}
+    </svg>
+  );
+}
+
+// ── Services Panel ─────────────────────────────────────────
+function ServicesPanel({ services, onRegister }) {
+  const [name, setName] = useState('');
+  const [url, setUrl] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState('');
+
+  const handleRegister = async () => {
+    if (!name || !url) return;
+    setLoading(true);
+    try {
+      const res = await fetch(`${API}/api/discovery/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ serviceName: name, baseUrl: url, environment: 'production' }),
+      });
+      const data = await res.json();
+      setSuccess(data.message || 'Registered!');
+      setName(''); setUrl('');
+      setTimeout(() => { setSuccess(''); onRegister(); }, 2000);
+    } catch { setSuccess('Error registering service'); }
+    setLoading(false);
+  };
+
+  return (
+    <div className="card">
+      <div className="card-header">
+        <span className="card-title">Registered Services</span>
+        <span className="card-count">{services.length} total</span>
+      </div>
+      <div className="card-body">
+        <div className="form-row">
+          <input className="form-input" placeholder="service-name" value={name} onChange={e => setName(e.target.value)}/>
+          <input className="form-input" placeholder="http://localhost:8080" value={url} onChange={e => setUrl(e.target.value)}/>
+          <button className="btn-primary" onClick={handleRegister} disabled={loading || !name || !url}>
+            {loading ? '...' : 'Register'}
+          </button>
+        </div>
+        {success && <div className="success-msg">✓ {success}</div>}
+        <div className="scroll-list" style={{marginTop: 12}}>
+          {services.length === 0 && <div className="empty"><div className="empty-icon">📡</div>No services registered</div>}
+          {services.map((s, i) => (
+            <div className="service-item" key={i}>
+              <div>
+                <div className="service-name">{s.name}</div>
+                <div className="timestamp">{s.baseUrl}</div>
+              </div>
+              <span className="service-env">{s.environment || 'production'}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Security Panel ─────────────────────────────────────────
+function SecurityPanel({ alerts }) {
+  const resolve = async (id) => {
+    await fetch(`${API}/api/security/alerts/${id}/resolve`, { method: 'PATCH' });
+  };
+
+  return (
+    <div className="card">
+      <div className="card-header">
+        <span className="card-title">Security Alerts</span>
+        <span className="card-count" style={{color: alerts.length ? 'var(--accent2)' : 'var(--accent3)'}}>
+          {alerts.length} active
+        </span>
+      </div>
+      <div className="card-body">
+        <div className="scroll-list">
+          {alerts.length === 0 && <div className="empty"><div className="empty-icon">🛡️</div>No active alerts</div>}
+          {alerts.map((a, i) => (
+            <div className={`alert-item ${a.severity}`} key={i}>
+              <div className="alert-header">
+                <span className="alert-rule">{a.ruleId}</span>
+                <span className={`severity-badge ${a.severity}`}>{a.severity}</span>
+              </div>
+              <div className="alert-endpoint">{a.endpoint}</div>
+              <div className="alert-endpoint" style={{marginTop:4}}>{a.serviceName}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Suggestions Panel ──────────────────────────────────────
+function SuggestionsPanel({ suggestions, onTrigger, onRefresh }) {
+  const [triggering, setTriggering] = useState(false);
+
+  const trigger = async () => {
+    setTriggering(true);
+    await fetch(`${API}/api/refactoring/trigger`, { method: 'POST' });
+    setTimeout(() => { setTriggering(false); onRefresh(); }, 15000);
+  };
+
+  const updateStatus = async (id, status) => {
+    await fetch(`${API}/api/refactoring/suggestions/${id}/status`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status }),
+    });
+    onRefresh();
+  };
+
+  return (
+    <div className="card">
+      <div className="card-header">
+        <span className="card-title">Gemini AI Suggestions</span>
+        <button className="refresh-btn" onClick={trigger} disabled={triggering}>
+          {triggering ? 'Analyzing...' : '⚡ Trigger AI'}
+        </button>
+      </div>
+      <div className="card-body">
+        <div className="scroll-list">
+          {suggestions.length === 0 && (
+            <div className="empty">
+              <div className="empty-icon">🤖</div>
+              No suggestions yet. Click "Trigger AI" to analyze.
+            </div>
+          )}
+          {suggestions.filter(s => s.status === 'pending').map((s, i) => (
+            <div className="suggestion-item" key={i}>
+              <div className="suggestion-header">
+                <div className="suggestion-title">{s.title}</div>
+                <span className={`severity-badge ${s.priority === 'high' ? 'critical' : s.priority === 'medium' ? 'medium' : 'low'}`}>
+                  {s.priority}
+                </span>
+              </div>
+              <div className="suggestion-desc">{s.description}</div>
+              <div className="suggestion-footer">
+                <span className="tag">{s.category}</span>
+                {s.affectedServices && s.affectedServices.split(',').map((svc, j) => (
+                  <span className="tag green" key={j}>{svc.trim()}</span>
+                ))}
+              </div>
+              {s.estimatedImpact && (
+                <div className="impact-text" style={{marginTop: 8}}>↗ {s.estimatedImpact}</div>
+              )}
+              <div className="btn-row">
+                <button className="btn btn-accept" onClick={() => updateStatus(s.id, 'accepted')}>✓ Accept</button>
+                <button className="btn btn-dismiss" onClick={() => updateStatus(s.id, 'dismissed')}>✕ Dismiss</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Performance Panel ──────────────────────────────────────
+function PerformancePanel({ bottlenecks, unused }) {
+  return (
+    <div className="card">
+      <div className="card-header">
+        <span className="card-title">Performance</span>
+        <span className="card-count">{bottlenecks.length} bottlenecks</span>
+      </div>
+      <div className="card-body">
+        {bottlenecks.length === 0 && unused.length === 0 && (
+          <div className="empty"><div className="empty-icon">⚡</div>No issues detected</div>
+        )}
+        {bottlenecks.map((b, i) => (
+          <div className="alert-item high" key={i}>
+            <div className="alert-header">
+              <span className="alert-rule">{b.method} {b.path}</span>
+              <span className="severity-badge high">{Math.round(b.avgLatencyMs)}ms</span>
+            </div>
+            <div className="alert-endpoint">{b.serviceName}</div>
+          </div>
+        ))}
+        {unused.length > 0 && (
+          <>
+            <div style={{marginTop:12, marginBottom:8, fontSize:11, color:'var(--text2)', fontFamily:'var(--mono)'}}>UNUSED APIs (30d)</div>
+            {unused.slice(0,3).map((u, i) => (
+              <div className="alert-item low" key={i}>
+                <div className="alert-rule" style={{fontFamily:'var(--mono)',fontSize:12}}>{u.method} {u.path}</div>
+                <div className="alert-endpoint">{u.serviceName}</div>
+              </div>
+            ))}
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ── Overview Tab ───────────────────────────────────────────
+function OverviewTab({ data, onRegister, onRefresh }) {
+  return (
+    <>
+      <div className="stats-grid">
+        <StatCard label="Services" value={data.services.length} sub="registered" color="blue"/>
+        <StatCard label="APIs Discovered" value={data.apis.length} sub="endpoints" color="green"/>
+        <StatCard label="Security Alerts" value={data.alerts.length} sub="unresolved" color="red"/>
+        <StatCard label="AI Suggestions" value={data.suggestions.length} sub="pending" color="warn"/>
+      </div>
+
+      <div className="section-title">Dependency Graph</div>
+      <div className="card" style={{marginBottom:24}}>
+        <div className="card-body" style={{padding:0}}>
+          <div className="graph-container">
+            <DepGraph nodes={data.graph.nodes} edges={data.graph.edges}/>
+          </div>
+        </div>
+      </div>
+
+      <div className="two-col">
+        <ServicesPanel services={data.services} onRegister={onRegister}/>
+        <SecurityPanel alerts={data.alerts}/>
+      </div>
+    </>
+  );
+}
+
+// ── Main App ───────────────────────────────────────────────
+function App() {
+  const [tab, setTab] = useState('overview');
+  const [loading, setLoading] = useState(true);
+  const [health, setHealth] = useState(null);
+  const [data, setData] = useState({
+    services: [], apis: [], alerts: [], suggestions: [],
+    graph: { nodes: [], edges: [] },
+    bottlenecks: [], unused: [],
+  });
+
+  const fetchAll = useCallback(async () => {
+    setLoading(true);
+    const [healthData, apisData, alertsData, suggestionsData, graphData, bottlenecksData, unusedData] = await Promise.all([
+      apiFetch('/health'),
+      apiFetch('/api/discovery/apis'),
+      apiFetch('/api/security/alerts'),
+      apiFetch('/api/refactoring/suggestions'),
+      apiFetch('/api/dependency/graph'),
+      apiFetch('/api/performance/bottlenecks'),
+      apiFetch('/api/performance/unused'),
+    ]);
+
+    setHealth(healthData);
+
+    // Extract services from APIs
+    const serviceMap = {};
+    (apisData?.apis || []).forEach(a => {
+      if (a.serviceName) serviceMap[a.serviceName] = { name: a.serviceName, baseUrl: a.baseUrl, environment: a.environment };
+    });
+
+    setData({
+      services: Object.values(serviceMap),
+      apis: apisData?.apis || [],
+      alerts: (alertsData?.alerts || []).filter(a => !a.resolved),
+      suggestions: suggestionsData?.suggestions || [],
+      graph: graphData || { nodes: [], edges: [] },
+      bottlenecks: bottlenecksData?.bottlenecks || [],
+      unused: unusedData?.unused || [],
+    });
+    setLoading(false);
+  }, []);
+
+  // Also fetch services directly from Neo4j via dependency graph nodes
+  const fetchServices = useCallback(async () => {
+    const graphData = await apiFetch('/api/dependency/graph');
+    const serviceNames = new Set((graphData?.nodes || []).map(n => n.id));
+    // Merge with existing
+    setData(prev => {
+      const existingNames = new Set(prev.services.map(s => s.name));
+      const newServices = [...prev.services];
+      serviceNames.forEach(name => {
+        if (!existingNames.has(name)) newServices.push({ name, baseUrl: '', environment: 'production' });
+      });
+      return { ...prev, services: newServices, graph: graphData || prev.graph };
+    });
+  }, []);
+
+  useEffect(() => { fetchAll(); }, []);
+
+  // Auto refresh every 30s
+  useEffect(() => {
+    const interval = setInterval(fetchAll, 30000);
+    return () => clearInterval(interval);
+  }, [fetchAll]);
+
+  const isOnline = health?.status === 'ok';
+
+  return (
+    <div>
+      <header className="header">
+        <div className="logo">
+          <div className="logo-badge">P42</div>
+          <div>
+            <div className="logo-text">PROJECT 42</div>
+            <div className="logo-sub">Autonomous Governance System</div>
+          </div>
+        </div>
+        <div className="header-right">
+          <div className="status-pill">
+            <div className={`status-dot ${isOnline ? 'green' : 'red'}`}/>
+            {isOnline ? 'SYSTEM ONLINE' : 'OFFLINE'}
+          </div>
+          <button className="refresh-btn" onClick={fetchAll}>↻ Refresh</button>
+        </div>
+      </header>
+
+      <nav className="nav">
+        {['overview', 'security', 'performance', 'suggestions'].map(t => (
+          <button key={t} className={`nav-tab ${tab === t ? 'active' : ''}`} onClick={() => setTab(t)}>
+            {t}
+          </button>
+        ))}
+      </nav>
+
+      <main className="main">
+        {loading ? (
+          <div className="loading"><div className="spinner"/><span>Loading data...</span></div>
+        ) : (
+          <>
+            {tab === 'overview' && (
+              <OverviewTab data={data} onRegister={fetchAll} onRefresh={fetchAll}/>
+            )}
+            {tab === 'security' && (
+              <>
+                <div className="stats-grid">
+                  <StatCard label="Critical" value={data.alerts.filter(a=>a.severity==='critical').length} sub="alerts" color="red"/>
+                  <StatCard label="High" value={data.alerts.filter(a=>a.severity==='high').length} sub="alerts" color="warn"/>
+                  <StatCard label="Medium" value={data.alerts.filter(a=>a.severity==='medium').length} sub="alerts" color="blue"/>
+                  <StatCard label="Low" value={data.alerts.filter(a=>a.severity==='low').length} sub="alerts" color="green"/>
+                </div>
+                <SecurityPanel alerts={data.alerts}/>
+              </>
+            )}
+            {tab === 'performance' && (
+              <>
+                <div className="stats-grid">
+                  <StatCard label="Bottlenecks" value={data.bottlenecks.length} sub="endpoints" color="red"/>
+                  <StatCard label="Unused APIs" value={data.unused.length} sub="30+ days" color="warn"/>
+                  <StatCard label="Total APIs" value={data.apis.length} sub="discovered" color="blue"/>
+                  <StatCard label="Services" value={data.services.length} sub="monitored" color="green"/>
+                </div>
+                <PerformancePanel bottlenecks={data.bottlenecks} unused={data.unused}/>
+              </>
+            )}
+            {tab === 'suggestions' && (
+              <SuggestionsPanel
+                suggestions={data.suggestions}
+                onTrigger={fetchAll}
+                onRefresh={fetchAll}
+              />
+            )}
+          </>
+        )}
+      </main>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
