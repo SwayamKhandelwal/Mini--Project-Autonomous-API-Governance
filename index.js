@@ -1,20 +1,20 @@
-const neo4j = require('neo4j-driver');
-const logger = require('../logger');
+const neo4j = require("neo4j-driver");
+const logger = require("./shared/logger");
 
-require('dotenv').config();
+require("dotenv").config();
 
 let driver;
 
 function getDriver() {
   if (!driver) {
     driver = neo4j.driver(
-      process.env.NEO4J_URI || 'bolt://localhost:7687',
+      process.env.NEO4J_URI || "bolt://localhost:7687",
       neo4j.auth.basic(
-        process.env.NEO4J_USER || 'neo4j',
-        process.env.NEO4J_PASSWORD || 'password'
-      )
+        process.env.NEO4J_USER || "neo4j",
+        process.env.NEO4J_PASSWORD || "password",
+      ),
     );
-    logger.info('Neo4j driver initialized');
+    logger.info("Neo4j driver initialized");
   }
   return driver;
 }
@@ -42,14 +42,14 @@ async function initSchema() {
   for (const query of constraints) {
     await runQuery(query);
   }
-  logger.info('Neo4j schema initialized');
+  logger.info("Neo4j schema initialized");
 }
 
 async function closeDriver() {
   if (driver) {
     await driver.close();
     driver = null;
-    logger.info('Neo4j driver closed');
+    logger.info("Neo4j driver closed");
   }
 }
 

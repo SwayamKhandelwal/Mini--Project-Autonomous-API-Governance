@@ -1,129 +1,108 @@
 require('dotenv').config();
 
+const axios = require('axios');
 const { v4: uuidv4 } = require('uuid');
 const logger = require('../../shared/logger');
 const { createConsumer, createProducer, publish, TOPICS } = require('../../shared/kafka');
 const { runQuery } = require('../../shared/neo4j');
 
-const SERVICE_NAME = 'performance-agent';
+const SERVICE_NAME = 'discovery-agent';
 
-const THRESHOLDS = {
-  LATENCY_WARNING_MS: 500,
-  LATENCY_CRITICAL_MS: 2000,
-  ERROR_RATE_WARNING: 0.05,
-  ERROR_RATE_CRITICAL: 0.15,
-  THROUGHPUT_MIN_RPS: 0.01, // below this = effectively unused
-};
+async function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-/**
- * Ingest a performance metric data point for an API endpoint
- */
-async function ingestMetric({ serviceName, path, method, latencyMs, statusCode }) {
-  const isError = statusCode >= 400;
-  const now = new Date().toISOString();
-
-  await runQuery(
-    `MATCH (a:API {path: $path, method: $method, serviceName: $serviceName})
-     SET a.lastCalledAt = $now,
-         a.totalCalls = coalesce(a.totalCalls, 0) + 1,
-         a.totalErrors = coalesce(a.totalErrors, 0) + $errorIncrement,
-         a.avgLatencyMs = (coalesce(a.avgLatencyMs, 0) * coalesce(a.totalCalls - 1, 0) + $latency) / coalesce(a.totalCalls, 1),
-         a.errorRate = toFloat(coalesce(a.totalErrors, 0)) / toFloat(coalesce(a.totalCalls, 1))`,
-    {
-      path, method, serviceName,
-      latency: latencyMs,
-      errorIncrement: isError ? 1 : 0,
-      now,
-    }
-  );
+async function fetchOpenApiSpec(baseUrl) {
+  const commonPaths = ['/openapi.json', '/swagger.json', '/api-docs', '/v3/api-docs'];
+  for (const path of commonPaths) {
+    try {
+      const res = await axios.get(`${baseUrl}${path}`, { timeout: 5000 });
+      if (res.data && res.data.paths) return res.data;
+    } catch { }
+  }
+  return null;
 }
 
-/**
- * Detect performance issues and publish alerts
- */
-async function detectBottlenecks(producer) {
-  // High latency endpoints
-  const latencyRecords = await runQuery(`
-    MATCH (a:API)
-    WHERE a.avgLatencyMs > $threshold
-    RETURN a
-    ORDER BY a.avgLatencyMs DESC LIMIT 20
-  `, { threshold: THRESHOLDS.LATENCY_WARNING_MS });
-
-  for (const r of latencyRecords) {
-    const ep = r.get('a').properties;
-    const severity = ep.avgLatencyMs > THRESHOLDS.LATENCY_CRITICAL_MS ? 'critical' : 'warning';
-
-    await publish(producer, TOPICS.PERFORMANCE_ISSUE, {
-      id: uuidv4(),
-      type: 'HIGH_LATENCY',
-      severity,
-      serviceName: ep.serviceName,
-      endpoint: `${ep.method} ${ep.path}`,
-      avgLatencyMs: ep.avgLatencyMs,
-      timestamp: new Date().toISOString(),
-    });
-
-    logger.warn(`[PERF] High latency: ${ep.method} ${ep.path} - ${ep.avgLatencyMs}ms`, { service: SERVICE_NAME });
+function extractEndpoints(spec, serviceName, baseUrl) {
+  const endpoints = [];
+  for (const [path, methods] of Object.entries(spec.paths || {})) {
+    for (const [method, details] of Object.entries(methods)) {
+      if (['get','post','put','patch','delete','options','head'].includes(method)) {
+        endpoints.push({
+          id: uuidv4(), path, method: method.toUpperCase(),
+          serviceName, baseUrl,
+          summary: details.summary || '',
+          deprecated: details.deprecated || false,
+          requiresAuth: !!(details.security && details.security.length > 0),
+          discoveredAt: new Date().toISOString(),
+          lastCalledAt: null, avgLatencyMs: 0, errorRate: 0,
+        });
+      }
+    }
   }
+  return endpoints;
+}
 
-  // High error rate endpoints
-  const errorRecords = await runQuery(`
-    MATCH (a:API)
-    WHERE a.errorRate > $threshold AND a.totalCalls > 10
-    RETURN a
-    ORDER BY a.errorRate DESC LIMIT 20
-  `, { threshold: THRESHOLDS.ERROR_RATE_WARNING });
-
-  for (const r of errorRecords) {
-    const ep = r.get('a').properties;
-    await publish(producer, TOPICS.PERFORMANCE_ISSUE, {
-      id: uuidv4(),
-      type: 'HIGH_ERROR_RATE',
-      severity: ep.errorRate > THRESHOLDS.ERROR_RATE_CRITICAL ? 'critical' : 'warning',
-      serviceName: ep.serviceName,
-      endpoint: `${ep.method} ${ep.path}`,
-      errorRate: ep.errorRate,
-      timestamp: new Date().toISOString(),
-    });
+async function storeEndpoints(endpoints, serviceName) {
+  for (const ep of endpoints) {
+    await runQuery(
+      `MERGE (s:Service {name: $serviceName})
+       MERGE (a:API {path: $path, method: $method, serviceName: $serviceName})
+       ON CREATE SET a += $props ON MATCH SET a.lastSeen = $now
+       MERGE (a)-[:BELONGS_TO]->(s)`,
+      { serviceName, path: ep.path, method: ep.method, props: ep, now: new Date().toISOString() }
+    );
   }
+}
 
-  logger.info('Bottleneck detection complete', { service: SERVICE_NAME });
+async function scanService(producer, { serviceName, baseUrl, environment }) {
+  const spec = await fetchOpenApiSpec(baseUrl);
+  if (!spec) return;
+  const endpoints = extractEndpoints(spec, serviceName, baseUrl);
+  await storeEndpoints(endpoints, serviceName);
+  await publish(producer, TOPICS.API_DISCOVERED, {
+    serviceName, baseUrl, environment,
+    endpointCount: endpoints.length,
+    endpoints: endpoints.map(e => ({ path: e.path, method: e.method, deprecated: e.deprecated })),
+    timestamp: new Date().toISOString(),
+  });
 }
 
 async function main() {
-  logger.info('Starting Performance Agent...', { service: SERVICE_NAME });
+  logger.info('Starting API Discovery Agent...', { service: SERVICE_NAME });
 
-  
-
-  const producer = await createProducer();
-  const consumer = await createConsumer('performance-agent-group');
-
-  await consumer.subscribe({ topic: TOPICS.GOVERNANCE_COMMAND, fromBeginning: false });
+  // Retry loop - keep trying until Kafka is ready
+  let producer, consumer;
+  while (true) {
+    try {
+      producer = await createProducer();
+      consumer = await createConsumer('discovery-agent-group');
+      await consumer.subscribe({ topic: TOPICS.GOVERNANCE_COMMAND, fromBeginning: false });
+      break;
+    } catch (err) {
+      logger.warn('Kafka not ready, retrying in 10s...', { service: SERVICE_NAME });
+      await sleep(10000);
+    }
+  }
 
   await consumer.run({
     eachMessage: async ({ message }) => {
       try {
         const { command, payload } = JSON.parse(message.value.toString());
-
-        if (command === 'INGEST_METRIC') {
-          await ingestMetric(payload);
-        } else if (command === 'RUN_PERF_ANALYSIS') {
-          await detectBottlenecks(producer);
-        }
+        if (command === 'SCAN_SERVICE') await scanService(producer, payload);
       } catch (err) {
         logger.error('Error processing message', { error: err.message, service: SERVICE_NAME });
       }
     },
   });
 
-  // Scheduled bottleneck detection every 2 minutes
-  setInterval(() => detectBottlenecks(producer), 120000);
+  setInterval(async () => {
+    const records = await runQuery('MATCH (s:Service) RETURN s');
+    for (const r of records) {
+      const s = r.get('s').properties;
+      await scanService(producer, { serviceName: s.name, baseUrl: s.baseUrl, environment: s.environment });
+    }
+  }, parseInt(process.env.SCAN_INTERVAL_MS || '60000'));
 
-  logger.info('Performance Agent is running', { service: SERVICE_NAME });
+  logger.info('API Discovery Agent is running', { service: SERVICE_NAME });
 }
 
-main().catch((err) => {
-  logger.error('Performance agent failed', { error: err.message });
-  process.exit(1);
-});
+main().catch(err => { logger.error('Discovery agent failed', { error: err.message }); process.exit(1); });

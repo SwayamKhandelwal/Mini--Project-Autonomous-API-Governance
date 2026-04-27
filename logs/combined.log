@@ -1141,3 +1141,374 @@
 2026-03-25 15:54:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for user-service
 2026-03-25 15:54:57 [32minfo[39m: [discovery-agent] Scanning service: order-service @ http://localhost:8084
 2026-03-25 15:54:57 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for order-service
+2026-04-08 15:30:33 [32minfo[39m: [dependency-agent] Starting Dependency Mapping Agent...
+2026-04-08 15:30:33 [32minfo[39m: [performance-agent] Starting Performance Agent...
+2026-04-08 15:30:33 [32minfo[39m: [security-agent] Starting Security Analysis Agent...
+2026-04-08 15:30:33 [32minfo[39m: [discovery-agent] Starting API Discovery Agent...
+2026-04-08 15:30:33 [32minfo[39m: [refactoring-agent] Starting Refactoring Agent...
+2026-04-08 15:30:33 [32minfo[39m: Kafka producer connected
+2026-04-08 15:30:33 [32minfo[39m: Kafka producer connected
+2026-04-08 15:30:33 [32minfo[39m: Kafka producer connected
+2026-04-08 15:30:33 [32minfo[39m: Kafka producer connected
+2026-04-08 15:30:33 [32minfo[39m: Kafka producer connected
+2026-04-08 15:30:33 [32minfo[39m: Kafka consumer connected [group: refactoring-agent-group]
+2026-04-08 15:30:33 [32minfo[39m: Kafka consumer connected [group: dependency-agent-group]
+2026-04-08 15:30:33 [32minfo[39m: Kafka consumer connected [group: discovery-agent-group]
+2026-04-08 15:30:33 [32minfo[39m: Kafka consumer connected [group: performance-agent-group]
+2026-04-08 15:30:33 [32minfo[39m: Kafka consumer connected [group: security-agent-group]
+2026-04-08 15:30:33 [31merror[39m: Performance agent failed {"error":"This server does not host this topic-partition"}
+2026-04-08 15:30:33 [31merror[39m: Discovery agent failed {"error":"This server does not host this topic-partition"}
+2026-04-08 15:30:33 [31merror[39m: Security agent failed {"error":"This server does not host this topic-partition"}
+2026-04-08 15:30:33 [31merror[39m: Dependency agent failed {"error":"This server does not host this topic-partition"}
+2026-04-08 15:31:10 [32minfo[39m: [dependency-agent] Starting Dependency Mapping Agent...
+2026-04-08 15:31:10 [32minfo[39m: Kafka producer connected
+2026-04-08 15:31:10 [32minfo[39m: Kafka consumer connected [group: dependency-agent-group]
+2026-04-08 15:31:10 [32minfo[39m: [performance-agent] Starting Performance Agent...
+2026-04-08 15:31:10 [32minfo[39m: Kafka producer connected
+2026-04-08 15:31:10 [32minfo[39m: Kafka consumer connected [group: performance-agent-group]
+2026-04-08 15:31:10 [32minfo[39m: [refactoring-agent] Starting Refactoring Agent...
+2026-04-08 15:31:10 [32minfo[39m: Kafka producer connected
+2026-04-08 15:31:10 [32minfo[39m: Kafka consumer connected [group: refactoring-agent-group]
+2026-04-08 15:31:10 [32minfo[39m: [security-agent] Starting Security Analysis Agent...
+2026-04-08 15:31:10 [32minfo[39m: Kafka producer connected
+2026-04-08 15:31:10 [32minfo[39m: Kafka consumer connected [group: security-agent-group]
+2026-04-08 15:31:10 [32minfo[39m: [discovery-agent] Starting API Discovery Agent...
+2026-04-08 15:31:10 [32minfo[39m: Kafka producer connected
+2026-04-08 15:31:10 [32minfo[39m: Kafka consumer connected [group: discovery-agent-group]
+2026-04-08 15:31:11 [32minfo[39m: [gateway] Initializing Project42 Gateway...
+2026-04-08 15:31:14 [32minfo[39m: Created Kafka topics: dependency.mapped, refactor.suggestion
+2026-04-08 15:31:14 [32minfo[39m: Neo4j driver initialized
+2026-04-08 15:31:17 [32minfo[39m: Neo4j schema initialized
+2026-04-08 15:31:17 [32minfo[39m: [gateway] Gateway running on http://localhost:3000
+2026-04-08 15:31:17 [32minfo[39m: [gateway] Metrics available at http://localhost:3000/metrics
+2026-04-08 15:31:18 [32minfo[39m: [performance-agent] Performance Agent is running
+2026-04-08 15:31:18 [32minfo[39m: [dependency-agent] Dependency Mapping Agent is running
+2026-04-08 15:31:18 [32minfo[39m: [discovery-agent] API Discovery Agent is running
+2026-04-08 15:31:18 [32minfo[39m: [security-agent] Security Analysis Agent is running
+2026-04-08 15:31:20 [32minfo[39m: [refactoring-agent] Refactoring Agent is running
+2026-04-08 15:32:18 [32minfo[39m: [discovery-agent] Running scheduled re-scan of all services...
+2026-04-08 15:32:18 [32minfo[39m: Neo4j driver initialized
+2026-04-08 15:32:21 [32minfo[39m: [discovery-agent] Scanning service: test-service @ http://localhost:8080
+2026-04-08 15:32:27 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for test-service
+2026-04-08 15:32:27 [32minfo[39m: [discovery-agent] Scanning service: auth-service @ http://localhost:8081
+2026-04-08 15:32:27 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for auth-service
+2026-04-08 15:32:27 [32minfo[39m: [discovery-agent] Scanning service: payment-service @ http://localhost:8082
+2026-04-08 15:32:27 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for payment-service
+2026-04-08 15:32:27 [32minfo[39m: [discovery-agent] Scanning service: user-service @ http://localhost:8083
+2026-04-08 15:32:27 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for user-service
+2026-04-08 15:32:27 [32minfo[39m: [discovery-agent] Scanning service: order-service @ http://localhost:8084
+2026-04-08 15:32:27 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for order-service
+2026-04-08 15:33:14 [32minfo[39m: [gateway] GET / - 200
+2026-04-08 15:33:14 [32minfo[39m: [gateway] GET /alerts - 200
+2026-04-08 15:33:14 [32minfo[39m: [gateway] GET /suggestions - 200
+2026-04-08 15:33:14 [32minfo[39m: [gateway] GET /bottlenecks - 200
+2026-04-08 15:33:14 [32minfo[39m: [gateway] GET /unused - 200
+2026-04-08 15:33:14 [32minfo[39m: [gateway] GET /graph - 200
+2026-04-08 15:33:14 [32minfo[39m: [gateway] GET /apis - 200
+2026-04-08 15:33:18 [32minfo[39m: Neo4j driver initialized
+2026-04-08 15:33:18 [32minfo[39m: [discovery-agent] Running scheduled re-scan of all services...
+2026-04-08 15:33:18 [32minfo[39m: [discovery-agent] Scanning service: test-service @ http://localhost:8080
+2026-04-08 15:33:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for test-service
+2026-04-08 15:33:18 [32minfo[39m: [discovery-agent] Scanning service: auth-service @ http://localhost:8081
+2026-04-08 15:33:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for auth-service
+2026-04-08 15:33:18 [32minfo[39m: [discovery-agent] Scanning service: payment-service @ http://localhost:8082
+2026-04-08 15:33:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for payment-service
+2026-04-08 15:33:18 [32minfo[39m: [discovery-agent] Scanning service: user-service @ http://localhost:8083
+2026-04-08 15:33:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for user-service
+2026-04-08 15:33:18 [32minfo[39m: [performance-agent] Bottleneck detection complete
+2026-04-08 15:33:18 [32minfo[39m: [discovery-agent] Scanning service: order-service @ http://localhost:8084
+2026-04-08 15:33:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for order-service
+2026-04-08 15:33:43 [32minfo[39m: Kafka producer connected
+2026-04-08 15:33:43 [32minfo[39m: [refactoring-route] Refactor analysis triggered manually
+2026-04-08 15:33:43 [32minfo[39m: [gateway] POST /trigger - 200
+2026-04-08 15:33:43 [32minfo[39m: [gateway] GET / - 200
+2026-04-08 15:33:43 [32minfo[39m: [gateway] GET /apis - 304
+2026-04-08 15:33:43 [32minfo[39m: [gateway] GET /alerts - 304
+2026-04-08 15:33:43 [32minfo[39m: [gateway] GET /graph - 304
+2026-04-08 15:33:43 [32minfo[39m: [gateway] GET /bottlenecks - 304
+2026-04-08 15:33:43 [32minfo[39m: [gateway] GET /suggestions - 304
+2026-04-08 15:33:44 [32minfo[39m: [gateway] GET /unused - 304
+2026-04-08 15:33:48 [32minfo[39m: Neo4j driver initialized
+2026-04-08 15:33:49 [32minfo[39m: [refactoring-agent] Running LLM architecture analysis...
+2026-04-08 15:34:02 [31merror[39m: [refactoring-agent] LLM analysis failed {"error":"[GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."}
+2026-04-08 15:34:13 [32minfo[39m: [gateway] GET / - 200
+2026-04-08 15:34:13 [32minfo[39m: [gateway] GET /apis - 304
+2026-04-08 15:34:13 [32minfo[39m: [gateway] GET /alerts - 304
+2026-04-08 15:34:14 [32minfo[39m: [gateway] GET /suggestions - 304
+2026-04-08 15:34:14 [32minfo[39m: [gateway] GET /graph - 304
+2026-04-08 15:34:14 [32minfo[39m: [gateway] GET /bottlenecks - 304
+2026-04-08 15:34:14 [32minfo[39m: [gateway] GET /unused - 304
+2026-04-08 15:34:18 [32minfo[39m: [discovery-agent] Running scheduled re-scan of all services...
+2026-04-08 15:34:18 [32minfo[39m: [discovery-agent] Scanning service: test-service @ http://localhost:8080
+2026-04-08 15:34:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for test-service
+2026-04-08 15:34:18 [32minfo[39m: [discovery-agent] Scanning service: auth-service @ http://localhost:8081
+2026-04-08 15:34:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for auth-service
+2026-04-08 15:34:18 [32minfo[39m: [discovery-agent] Scanning service: payment-service @ http://localhost:8082
+2026-04-08 15:34:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for payment-service
+2026-04-08 15:34:18 [32minfo[39m: [discovery-agent] Scanning service: user-service @ http://localhost:8083
+2026-04-08 15:34:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for user-service
+2026-04-08 15:34:18 [32minfo[39m: [discovery-agent] Scanning service: order-service @ http://localhost:8084
+2026-04-08 15:34:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for order-service
+2026-04-08 15:34:43 [32minfo[39m: [gateway] GET / - 200
+2026-04-08 15:34:43 [32minfo[39m: [gateway] GET /apis - 304
+2026-04-08 15:34:43 [32minfo[39m: [gateway] GET /alerts - 304
+2026-04-08 15:34:43 [32minfo[39m: [gateway] GET /graph - 304
+2026-04-08 15:34:43 [32minfo[39m: [gateway] GET /suggestions - 304
+2026-04-08 15:34:43 [32minfo[39m: [gateway] GET /bottlenecks - 304
+2026-04-08 15:34:43 [32minfo[39m: [gateway] GET /unused - 304
+2026-04-08 15:35:13 [32minfo[39m: [gateway] GET / - 200
+2026-04-08 15:35:13 [32minfo[39m: [gateway] GET /apis - 304
+2026-04-08 15:35:13 [32minfo[39m: [gateway] GET /alerts - 304
+2026-04-08 15:35:13 [32minfo[39m: [gateway] GET /graph - 304
+2026-04-08 15:35:13 [32minfo[39m: [gateway] GET /suggestions - 304
+2026-04-08 15:35:14 [32minfo[39m: [gateway] GET /bottlenecks - 304
+2026-04-08 15:35:14 [32minfo[39m: [gateway] GET /unused - 304
+2026-04-08 15:35:18 [32minfo[39m: [performance-agent] Bottleneck detection complete
+2026-04-08 15:35:18 [32minfo[39m: [discovery-agent] Running scheduled re-scan of all services...
+2026-04-08 15:35:18 [32minfo[39m: [discovery-agent] Scanning service: test-service @ http://localhost:8080
+2026-04-08 15:35:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for test-service
+2026-04-08 15:35:18 [32minfo[39m: [discovery-agent] Scanning service: auth-service @ http://localhost:8081
+2026-04-08 15:35:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for auth-service
+2026-04-08 15:35:18 [32minfo[39m: [discovery-agent] Scanning service: payment-service @ http://localhost:8082
+2026-04-08 15:35:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for payment-service
+2026-04-08 15:35:18 [32minfo[39m: [discovery-agent] Scanning service: user-service @ http://localhost:8083
+2026-04-08 15:35:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for user-service
+2026-04-08 15:35:18 [32minfo[39m: [discovery-agent] Scanning service: order-service @ http://localhost:8084
+2026-04-08 15:35:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for order-service
+2026-04-08 15:35:25 [32minfo[39m: Kafka producer connected
+2026-04-08 15:35:25 [32minfo[39m: [refactoring-route] Refactor analysis triggered manually
+2026-04-08 15:35:25 [32minfo[39m: [gateway] POST /trigger - 200
+2026-04-08 15:35:30 [32minfo[39m: [refactoring-agent] Running LLM architecture analysis...
+2026-04-08 15:35:33 [31merror[39m: [refactoring-agent] LLM analysis failed {"error":"[GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."}
+2026-04-08 15:35:34 [32minfo[39m: [gateway] PATCH /suggestions/5287bc85-dda6-4df5-ad8c-bd3ea34a9677/status - 200
+2026-04-08 15:35:34 [32minfo[39m: [gateway] GET /apis - 304
+2026-04-08 15:35:34 [32minfo[39m: [gateway] GET / - 200
+2026-04-08 15:35:34 [32minfo[39m: [gateway] GET /graph - 304
+2026-04-08 15:35:34 [32minfo[39m: [gateway] GET /alerts - 304
+2026-04-08 15:35:34 [32minfo[39m: [gateway] GET /bottlenecks - 304
+2026-04-08 15:35:34 [32minfo[39m: [gateway] GET /suggestions - 200
+2026-04-08 15:35:34 [32minfo[39m: [gateway] GET /unused - 304
+2026-04-08 15:35:43 [32minfo[39m: [gateway] GET / - 200
+2026-04-08 15:35:43 [32minfo[39m: [gateway] GET /apis - 304
+2026-04-08 15:35:43 [32minfo[39m: [gateway] GET /graph - 304
+2026-04-08 15:35:43 [32minfo[39m: [gateway] GET /alerts - 304
+2026-04-08 15:35:43 [32minfo[39m: [gateway] GET /suggestions - 304
+2026-04-08 15:35:43 [32minfo[39m: [gateway] GET /bottlenecks - 304
+2026-04-08 15:35:43 [32minfo[39m: [gateway] GET /unused - 304
+2026-04-08 15:36:13 [32minfo[39m: [gateway] GET / - 200
+2026-04-08 15:36:13 [32minfo[39m: [gateway] GET /apis - 304
+2026-04-08 15:36:13 [32minfo[39m: [gateway] GET /alerts - 304
+2026-04-08 15:36:13 [32minfo[39m: [gateway] GET /suggestions - 304
+2026-04-08 15:36:13 [32minfo[39m: [gateway] GET /graph - 304
+2026-04-08 15:36:13 [32minfo[39m: [gateway] GET /bottlenecks - 304
+2026-04-08 15:36:13 [32minfo[39m: [gateway] GET /unused - 304
+2026-04-08 15:36:13 [32minfo[39m: [gateway] GET / - 200
+2026-04-08 15:36:13 [32minfo[39m: [gateway] GET /apis - 304
+2026-04-08 15:36:13 [32minfo[39m: [gateway] GET /alerts - 304
+2026-04-08 15:36:14 [32minfo[39m: [gateway] GET /suggestions - 304
+2026-04-08 15:36:14 [32minfo[39m: [gateway] GET /graph - 304
+2026-04-08 15:36:14 [32minfo[39m: [gateway] GET /bottlenecks - 304
+2026-04-08 15:36:14 [32minfo[39m: [gateway] GET /unused - 304
+2026-04-08 15:36:18 [32minfo[39m: [discovery-agent] Running scheduled re-scan of all services...
+2026-04-08 15:36:18 [32minfo[39m: [discovery-agent] Scanning service: test-service @ http://localhost:8080
+2026-04-08 15:36:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for test-service
+2026-04-08 15:36:18 [32minfo[39m: [discovery-agent] Scanning service: auth-service @ http://localhost:8081
+2026-04-08 15:36:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for auth-service
+2026-04-08 15:36:18 [32minfo[39m: [discovery-agent] Scanning service: payment-service @ http://localhost:8082
+2026-04-08 15:36:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for payment-service
+2026-04-08 15:36:18 [32minfo[39m: [discovery-agent] Scanning service: user-service @ http://localhost:8083
+2026-04-08 15:36:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for user-service
+2026-04-08 15:36:18 [32minfo[39m: [discovery-agent] Scanning service: order-service @ http://localhost:8084
+2026-04-08 15:36:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for order-service
+2026-04-08 15:36:18 [32minfo[39m: [security-agent] Running full security scan...
+2026-04-08 15:36:18 [32minfo[39m: Neo4j driver initialized
+2026-04-08 15:36:19 [32minfo[39m: [security-agent] Security scan complete: 0 endpoints analyzed
+2026-04-08 15:36:43 [32minfo[39m: [gateway] GET /alerts - 304
+2026-04-08 15:36:43 [32minfo[39m: [gateway] GET / - 200
+2026-04-08 15:36:43 [32minfo[39m: [gateway] GET /apis - 304
+2026-04-08 15:36:43 [32minfo[39m: [gateway] GET /bottlenecks - 304
+2026-04-08 15:36:43 [32minfo[39m: [gateway] GET /graph - 304
+2026-04-08 15:36:43 [32minfo[39m: [gateway] GET /suggestions - 304
+2026-04-08 15:36:43 [32minfo[39m: [gateway] GET /unused - 304
+2026-04-08 15:37:13 [32minfo[39m: [gateway] GET / - 200
+2026-04-08 15:37:13 [32minfo[39m: [gateway] GET /alerts - 304
+2026-04-08 15:37:13 [32minfo[39m: [gateway] GET /suggestions - 304
+2026-04-08 15:37:14 [32minfo[39m: [gateway] GET /apis - 304
+2026-04-08 15:37:14 [32minfo[39m: [gateway] GET /graph - 304
+2026-04-08 15:37:14 [32minfo[39m: [gateway] GET /bottlenecks - 304
+2026-04-08 15:37:14 [32minfo[39m: [gateway] GET /unused - 304
+2026-04-08 15:37:18 [32minfo[39m: [performance-agent] Bottleneck detection complete
+2026-04-08 15:37:18 [32minfo[39m: [discovery-agent] Running scheduled re-scan of all services...
+2026-04-08 15:37:18 [32minfo[39m: [discovery-agent] Scanning service: test-service @ http://localhost:8080
+2026-04-08 15:37:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for test-service
+2026-04-08 15:37:18 [32minfo[39m: [discovery-agent] Scanning service: auth-service @ http://localhost:8081
+2026-04-08 15:37:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for auth-service
+2026-04-08 15:37:18 [32minfo[39m: [discovery-agent] Scanning service: payment-service @ http://localhost:8082
+2026-04-08 15:37:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for payment-service
+2026-04-08 15:37:18 [32minfo[39m: [discovery-agent] Scanning service: user-service @ http://localhost:8083
+2026-04-08 15:37:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for user-service
+2026-04-08 15:37:18 [32minfo[39m: [discovery-agent] Scanning service: order-service @ http://localhost:8084
+2026-04-08 15:37:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for order-service
+2026-04-08 15:38:18 [32minfo[39m: [discovery-agent] Running scheduled re-scan of all services...
+2026-04-08 15:38:18 [32minfo[39m: [discovery-agent] Scanning service: test-service @ http://localhost:8080
+2026-04-08 15:38:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for test-service
+2026-04-08 15:38:18 [32minfo[39m: [discovery-agent] Scanning service: auth-service @ http://localhost:8081
+2026-04-08 15:38:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for auth-service
+2026-04-08 15:38:18 [32minfo[39m: [discovery-agent] Scanning service: payment-service @ http://localhost:8082
+2026-04-08 15:38:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for payment-service
+2026-04-08 15:38:18 [32minfo[39m: [discovery-agent] Scanning service: user-service @ http://localhost:8083
+2026-04-08 15:38:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for user-service
+2026-04-08 15:38:18 [32minfo[39m: [discovery-agent] Scanning service: order-service @ http://localhost:8084
+2026-04-08 15:38:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for order-service
+2026-04-08 15:39:18 [32minfo[39m: [performance-agent] Bottleneck detection complete
+2026-04-08 15:39:18 [32minfo[39m: [discovery-agent] Running scheduled re-scan of all services...
+2026-04-08 15:39:18 [32minfo[39m: [discovery-agent] Scanning service: test-service @ http://localhost:8080
+2026-04-08 15:39:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for test-service
+2026-04-08 15:39:18 [32minfo[39m: [discovery-agent] Scanning service: auth-service @ http://localhost:8081
+2026-04-08 15:39:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for auth-service
+2026-04-08 15:39:18 [32minfo[39m: [discovery-agent] Scanning service: payment-service @ http://localhost:8082
+2026-04-08 15:39:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for payment-service
+2026-04-08 15:39:18 [32minfo[39m: [discovery-agent] Scanning service: user-service @ http://localhost:8083
+2026-04-08 15:39:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for user-service
+2026-04-08 15:39:18 [32minfo[39m: [discovery-agent] Scanning service: order-service @ http://localhost:8084
+2026-04-08 15:39:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for order-service
+2026-04-08 15:40:18 [32minfo[39m: [discovery-agent] Running scheduled re-scan of all services...
+2026-04-08 15:40:18 [32minfo[39m: [discovery-agent] Scanning service: test-service @ http://localhost:8080
+2026-04-08 15:40:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for test-service
+2026-04-08 15:40:18 [32minfo[39m: [discovery-agent] Scanning service: auth-service @ http://localhost:8081
+2026-04-08 15:40:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for auth-service
+2026-04-08 15:40:18 [32minfo[39m: [discovery-agent] Scanning service: payment-service @ http://localhost:8082
+2026-04-08 15:40:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for payment-service
+2026-04-08 15:40:18 [32minfo[39m: [discovery-agent] Scanning service: user-service @ http://localhost:8083
+2026-04-08 15:40:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for user-service
+2026-04-08 15:40:18 [32minfo[39m: [discovery-agent] Scanning service: order-service @ http://localhost:8084
+2026-04-08 15:40:18 [33mwarn[39m: [discovery-agent] No OpenAPI spec found for order-service
+2026-04-09 09:46:21 [32minfo[39m: [security-agent] Starting Security Analysis Agent...
+2026-04-09 09:46:21 [32minfo[39m: [dependency-agent] Starting Dependency Mapping Agent...
+2026-04-09 09:46:21 [32minfo[39m: [discovery-agent] Starting API Discovery Agent...
+2026-04-09 09:46:21 [32minfo[39m: [refactoring-agent] Starting Refactoring Agent...
+2026-04-09 09:46:21 [32minfo[39m: [performance-agent] Starting Performance Agent...
+2026-04-09 09:46:21 [32minfo[39m: [gateway] Initializing Project42 Gateway...
+2026-04-09 09:46:21 [32minfo[39m: Kafka producer connected
+2026-04-09 09:46:21 [32minfo[39m: Kafka producer connected
+2026-04-09 09:46:21 [32minfo[39m: Kafka producer connected
+2026-04-09 09:46:21 [32minfo[39m: Kafka producer connected
+2026-04-09 09:46:21 [32minfo[39m: Kafka producer connected
+2026-04-09 09:46:21 [32minfo[39m: Kafka consumer connected [group: refactoring-agent-group]
+2026-04-09 09:46:21 [32minfo[39m: Kafka consumer connected [group: discovery-agent-group]
+2026-04-09 09:46:21 [32minfo[39m: Kafka consumer connected [group: dependency-agent-group]
+2026-04-09 09:46:21 [32minfo[39m: Kafka consumer connected [group: security-agent-group]
+2026-04-09 09:46:21 [32minfo[39m: Kafka consumer connected [group: performance-agent-group]
+2026-04-09 09:46:22 [31merror[39m: Discovery agent failed {"error":"This server does not host this topic-partition"}
+2026-04-09 09:46:22 [31merror[39m: Dependency agent failed {"error":"This server does not host this topic-partition"}
+2026-04-09 09:46:22 [31merror[39m: Security agent failed {"error":"This server does not host this topic-partition"}
+2026-04-09 09:46:22 [31merror[39m: Refactoring agent failed {"error":"This server does not host this topic-partition"}
+2026-04-13 19:48:38 [32minfo[39m: [discovery-agent] Starting API Discovery Agent...
+2026-04-13 19:48:38 [32minfo[39m: [performance-agent] Starting Performance Agent...
+2026-04-13 19:48:38 [32minfo[39m: [security-agent] Starting Security Analysis Agent...
+2026-04-13 19:48:38 [32minfo[39m: [dependency-agent] Starting Dependency Mapping Agent...
+2026-04-13 19:48:38 [32minfo[39m: [refactoring-agent] Starting Refactoring Agent...
+2026-04-13 19:48:38 [32minfo[39m: [gateway] Initializing Project42 Gateway...
+2026-04-13 19:48:39 [32minfo[39m: Kafka producer connected
+2026-04-13 19:48:39 [32minfo[39m: Kafka producer connected
+2026-04-13 19:48:39 [32minfo[39m: Kafka producer connected
+2026-04-13 19:48:39 [32minfo[39m: Kafka producer connected
+2026-04-13 19:48:39 [32minfo[39m: Kafka producer connected
+2026-04-13 19:48:39 [32minfo[39m: Kafka consumer connected [group: dependency-agent-group]
+2026-04-13 19:48:39 [32minfo[39m: Kafka consumer connected [group: security-agent-group]
+2026-04-13 19:48:39 [32minfo[39m: Kafka consumer connected [group: refactoring-agent-group]
+2026-04-13 19:48:39 [32minfo[39m: Kafka consumer connected [group: discovery-agent-group]
+2026-04-13 19:48:39 [32minfo[39m: Kafka consumer connected [group: performance-agent-group]
+2026-04-13 19:48:40 [31merror[39m: Dependency agent failed {"error":"This server does not host this topic-partition"}
+2026-04-13 19:48:40 [31merror[39m: Performance agent failed {"error":"This server does not host this topic-partition"}
+2026-04-13 19:53:09 [32minfo[39m: [security-agent] Starting Security Analysis Agent...
+2026-04-13 19:53:09 [32minfo[39m: [discovery-agent] Starting API Discovery Agent...
+2026-04-13 19:53:09 [32minfo[39m: [performance-agent] Starting Performance Agent...
+2026-04-13 19:53:09 [32minfo[39m: [dependency-agent] Starting Dependency Mapping Agent...
+2026-04-13 19:53:09 [32minfo[39m: [refactoring-agent] Starting Refactoring Agent...
+2026-04-13 19:53:10 [32minfo[39m: [gateway] Initializing Project42 Gateway...
+2026-04-13 19:53:16 [32minfo[39m: Kafka producer connected
+2026-04-13 19:53:16 [32minfo[39m: Kafka consumer connected [group: dependency-agent-group]
+2026-04-13 19:53:17 [32minfo[39m: Created Kafka topics: api.discovered, dependency.mapped, security.alert, performance.issue, refactor.suggestion, governance.command
+2026-04-13 19:53:17 [32minfo[39m: Neo4j driver initialized
+2026-04-13 19:53:17 [31merror[39m: Failed to bootstrap gateway {"error":"Connection was closed by server"}
+2026-04-13 19:53:18 [32minfo[39m: Kafka producer connected
+2026-04-13 19:53:18 [32minfo[39m: Kafka consumer connected [group: performance-agent-group]
+2026-04-13 19:59:39 [32minfo[39m: [performance-agent] Starting Performance Agent...
+2026-04-13 19:59:39 [32minfo[39m: [dependency-agent] Starting Dependency Mapping Agent...
+2026-04-13 19:59:39 [32minfo[39m: [refactoring-agent] Starting Refactoring Agent...
+2026-04-13 19:59:39 [32minfo[39m: [discovery-agent] Starting API Discovery Agent...
+2026-04-13 19:59:40 [32minfo[39m: [security-agent] Starting Security Analysis Agent...
+2026-04-13 19:59:40 [32minfo[39m: Kafka producer connected
+2026-04-13 19:59:40 [32minfo[39m: Kafka producer connected
+2026-04-13 19:59:40 [32minfo[39m: Kafka producer connected
+2026-04-13 19:59:40 [32minfo[39m: Kafka producer connected
+2026-04-13 19:59:40 [32minfo[39m: Kafka producer connected
+2026-04-13 19:59:40 [32minfo[39m: Kafka consumer connected [group: refactoring-agent-group]
+2026-04-13 19:59:40 [32minfo[39m: Kafka consumer connected [group: dependency-agent-group]
+2026-04-13 19:59:40 [32minfo[39m: Kafka consumer connected [group: discovery-agent-group]
+2026-04-13 19:59:40 [32minfo[39m: Kafka consumer connected [group: performance-agent-group]
+2026-04-13 19:59:40 [32minfo[39m: Kafka consumer connected [group: security-agent-group]
+2026-04-13 19:59:40 [31merror[39m: Security agent failed {"error":"This server does not host this topic-partition"}
+2026-04-13 19:59:40 [31merror[39m: Performance agent failed {"error":"This server does not host this topic-partition"}
+2026-04-13 19:59:40 [32minfo[39m: [gateway] Initializing Project42 Gateway...
+2026-04-13 19:59:41 [31merror[39m: Dependency agent failed {"error":"This server does not host this topic-partition"}
+2026-04-13 19:59:41 [31merror[39m: Refactoring agent failed {"error":"This server does not host this topic-partition"}
+2026-04-13 20:05:46 [32minfo[39m: [performance-agent] Starting Performance Agent...
+2026-04-13 20:05:46 [32minfo[39m: [refactoring-agent] Starting Refactoring Agent...
+2026-04-13 20:05:46 [32minfo[39m: [dependency-agent] Starting Dependency Mapping Agent...
+2026-04-13 20:05:46 [32minfo[39m: [security-agent] Starting Security Analysis Agent...
+2026-04-13 20:05:46 [32minfo[39m: [discovery-agent] Starting API Discovery Agent...
+2026-04-13 20:05:47 [32minfo[39m: Kafka producer connected
+2026-04-13 20:05:47 [32minfo[39m: Kafka producer connected
+2026-04-13 20:05:47 [32minfo[39m: Kafka producer connected
+2026-04-13 20:05:47 [32minfo[39m: Kafka producer connected
+2026-04-13 20:05:47 [32minfo[39m: Kafka producer connected
+2026-04-13 20:05:46 [32minfo[39m: [gateway] Initializing Project42 Gateway...
+2026-04-13 20:05:47 [32minfo[39m: Kafka consumer connected [group: discovery-agent-group]
+2026-04-13 20:05:47 [32minfo[39m: Kafka consumer connected [group: dependency-agent-group]
+2026-04-13 20:05:47 [32minfo[39m: Kafka consumer connected [group: refactoring-agent-group]
+2026-04-13 20:05:47 [32minfo[39m: Kafka consumer connected [group: performance-agent-group]
+2026-04-13 20:05:47 [32minfo[39m: Kafka consumer connected [group: security-agent-group]
+2026-04-13 20:05:47 [31merror[39m: Security agent failed {"error":"This server does not host this topic-partition"}
+2026-04-13 20:05:47 [31merror[39m: Performance agent failed {"error":"This server does not host this topic-partition"}
+2026-04-13 20:05:47 [31merror[39m: Discovery agent failed {"error":"This server does not host this topic-partition"}
+2026-04-13 20:05:47 [31merror[39m: Dependency agent failed {"error":"This server does not host this topic-partition"}
+2026-04-13 23:44:20 [32minfo[39m: [dependency-agent] Starting Dependency Mapping Agent...
+2026-04-13 23:44:20 [32minfo[39m: [security-agent] Starting Security Analysis Agent...
+2026-04-13 23:44:20 [32minfo[39m: [performance-agent] Starting Performance Agent...
+2026-04-13 23:44:20 [32minfo[39m: [refactoring-agent] Starting Refactoring Agent...
+2026-04-13 23:44:20 [32minfo[39m: [discovery-agent] Starting API Discovery Agent...
+2026-04-13 23:44:20 [32minfo[39m: [gateway] Initializing Project42 Gateway...
+2026-04-13 23:44:20 [32minfo[39m: Kafka producer connected
+2026-04-13 23:44:20 [32minfo[39m: Kafka producer connected
+2026-04-13 23:44:20 [32minfo[39m: Kafka producer connected
+2026-04-13 23:44:20 [32minfo[39m: Kafka producer connected
+2026-04-13 23:44:20 [32minfo[39m: Kafka producer connected
+2026-04-13 23:44:20 [32minfo[39m: Kafka consumer connected [group: refactoring-agent-group]
+2026-04-13 23:44:20 [32minfo[39m: Kafka consumer connected [group: security-agent-group]
+2026-04-13 23:44:20 [32minfo[39m: Kafka consumer connected [group: performance-agent-group]
+2026-04-13 23:44:20 [32minfo[39m: Kafka consumer connected [group: discovery-agent-group]
+2026-04-13 23:44:20 [32minfo[39m: Kafka consumer connected [group: dependency-agent-group]
+2026-04-13 23:44:21 [31merror[39m: Discovery agent failed {"error":"This server does not host this topic-partition"}
+2026-04-13 23:44:21 [31merror[39m: Performance agent failed {"error":"This server does not host this topic-partition"}
+2026-04-13 23:44:21 [31merror[39m: Dependency agent failed {"error":"This server does not host this topic-partition"}
+2026-04-13 23:44:21 [31merror[39m: Refactoring agent failed {"error":"This server does not host this topic-partition"}
+2026-04-13 23:49:04 [32minfo[39m: [dependency-agent] Starting Dependency Mapping Agent...
+2026-04-13 23:49:04 [32minfo[39m: [refactoring-agent] Starting Refactoring Agent...
+2026-04-13 23:49:04 [32minfo[39m: [performance-agent] Starting Performance Agent...
+2026-04-13 23:49:05 [32minfo[39m: [discovery-agent] Starting API Discovery Agent...
+2026-04-13 23:49:05 [32minfo[39m: [security-agent] Starting Security Analysis Agent...
+2026-04-13 23:49:05 [32minfo[39m: [gateway] Initializing Project42 Gateway...
+2026-04-13 23:50:54 [32minfo[39m: [performance-agent] Starting Performance Agent...
+2026-04-13 23:50:54 [32minfo[39m: [dependency-agent] Starting Dependency Mapping Agent...
+2026-04-13 23:50:54 [32minfo[39m: [refactoring-agent] Starting Refactoring Agent...
+2026-04-13 23:50:54 [32minfo[39m: [discovery-agent] Starting API Discovery Agent...
+2026-04-13 23:50:54 [32minfo[39m: [security-agent] Starting Security Analysis Agent...
+2026-04-13 23:50:55 [32minfo[39m: [gateway] Initializing Project42 Gateway...
+2026-04-13 23:51:21 [32minfo[39m: [dependency-agent] Starting Dependency Mapping Agent...
+2026-04-13 23:51:21 [32minfo[39m: [refactoring-agent] Starting Refactoring Agent...
+2026-04-13 23:51:21 [32minfo[39m: [performance-agent] Starting Performance Agent...
+2026-04-13 23:51:22 [32minfo[39m: [discovery-agent] Starting API Discovery Agent...
+2026-04-13 23:51:22 [32minfo[39m: [security-agent] Starting Security Analysis Agent...
+2026-04-13 23:51:22 [32minfo[39m: [gateway] Initializing Project42 Gateway...

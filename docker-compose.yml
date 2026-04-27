@@ -5,6 +5,7 @@ services:
     image: confluentinc/cp-zookeeper:7.6.0
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
     ports:
       - "2181:2181"
 
@@ -18,8 +19,18 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_OFFSETS_TOPIC_NUM_PARTITIONS: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_NUM_PARTITIONS: 1
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_LOG_RETENTION_HOURS: 1
 
   neo4j:
     image: neo4j:5.18
@@ -50,63 +61,6 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     volumes:
       - grafana_data:/var/lib/grafana
-
-  gateway:
-    build: .
-    command: node gateway/index.js
-    ports:
-      - "3000:3000"
-    env_file: .env
-    depends_on:
-      - kafka
-      - neo4j
-    restart: unless-stopped
-
-  agent-discovery:
-    build: .
-    command: node agents/discovery/index.js
-    env_file: .env
-    depends_on:
-      - kafka
-      - neo4j
-      - gateway
-    restart: unless-stopped
-
-  agent-dependency:
-    build: .
-    command: node agents/dependency/index.js
-    env_file: .env
-    depends_on:
-      - kafka
-      - neo4j
-    restart: unless-stopped
-
-  agent-security:
-    build: .
-    command: node agents/security/index.js
-    env_file: .env
-    depends_on:
-      - kafka
-      - neo4j
-    restart: unless-stopped
-
-  agent-performance:
-    build: .
-    command: node agents/performance/index.js
-    env_file: .env
-    depends_on:
-      - kafka
-      - neo4j
-    restart: unless-stopped
-
-  agent-refactoring:
-    build: .
-    command: node agents/refactoring/index.js
-    env_file: .env
-    depends_on:
-      - kafka
-      - neo4j
-    restart: unless-stopped
 
 volumes:
   neo4j_data:

@@ -26,3 +26,28 @@
 2026-03-25 15:45:12 [31merror[39m: Dependency agent failed {"error":"This server does not host this topic-partition"}
 2026-03-25 15:45:12 [31merror[39m: Security agent failed {"error":"This server does not host this topic-partition"}
 2026-03-25 15:45:12 [31merror[39m: Refactoring agent failed {"error":"This server does not host this topic-partition"}
+2026-04-08 15:30:33 [31merror[39m: Performance agent failed {"error":"This server does not host this topic-partition"}
+2026-04-08 15:30:33 [31merror[39m: Security agent failed {"error":"This server does not host this topic-partition"}
+2026-04-08 15:30:33 [31merror[39m: Discovery agent failed {"error":"This server does not host this topic-partition"}
+2026-04-08 15:30:33 [31merror[39m: Dependency agent failed {"error":"This server does not host this topic-partition"}
+2026-04-08 15:34:02 [31merror[39m: [refactoring-agent] LLM analysis failed {"error":"[GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."}
+2026-04-08 15:35:33 [31merror[39m: [refactoring-agent] LLM analysis failed {"error":"[GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent: [503 Service Unavailable] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later."}
+2026-04-09 09:46:22 [31merror[39m: Discovery agent failed {"error":"This server does not host this topic-partition"}
+2026-04-09 09:46:22 [31merror[39m: Dependency agent failed {"error":"This server does not host this topic-partition"}
+2026-04-09 09:46:22 [31merror[39m: Security agent failed {"error":"This server does not host this topic-partition"}
+2026-04-09 09:46:22 [31merror[39m: Refactoring agent failed {"error":"This server does not host this topic-partition"}
+2026-04-13 19:48:40 [31merror[39m: Dependency agent failed {"error":"This server does not host this topic-partition"}
+2026-04-13 19:48:40 [31merror[39m: Performance agent failed {"error":"This server does not host this topic-partition"}
+2026-04-13 19:53:17 [31merror[39m: Failed to bootstrap gateway {"error":"Connection was closed by server"}
+2026-04-13 19:59:40 [31merror[39m: Security agent failed {"error":"This server does not host this topic-partition"}
+2026-04-13 19:59:40 [31merror[39m: Performance agent failed {"error":"This server does not host this topic-partition"}
+2026-04-13 19:59:41 [31merror[39m: Dependency agent failed {"error":"This server does not host this topic-partition"}
+2026-04-13 19:59:41 [31merror[39m: Refactoring agent failed {"error":"This server does not host this topic-partition"}
+2026-04-13 20:05:47 [31merror[39m: Performance agent failed {"error":"This server does not host this topic-partition"}
+2026-04-13 20:05:47 [31merror[39m: Security agent failed {"error":"This server does not host this topic-partition"}
+2026-04-13 20:05:47 [31merror[39m: Discovery agent failed {"error":"This server does not host this topic-partition"}
+2026-04-13 20:05:47 [31merror[39m: Dependency agent failed {"error":"This server does not host this topic-partition"}
+2026-04-13 23:44:21 [31merror[39m: Discovery agent failed {"error":"This server does not host this topic-partition"}
+2026-04-13 23:44:21 [31merror[39m: Performance agent failed {"error":"This server does not host this topic-partition"}
+2026-04-13 23:44:21 [31merror[39m: Dependency agent failed {"error":"This server does not host this topic-partition"}
+2026-04-13 23:44:21 [31merror[39m: Refactoring agent failed {"error":"This server does not host this topic-partition"}

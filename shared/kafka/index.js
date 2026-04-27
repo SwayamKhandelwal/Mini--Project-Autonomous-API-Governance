@@ -3,7 +3,6 @@ const logger = require('../logger');
 
 require('dotenv').config();
 
-// Kafka Topics
 const TOPICS = {
   API_DISCOVERED: 'api.discovered',
   DEPENDENCY_MAPPED: 'dependency.mapped',
@@ -13,16 +12,22 @@ const TOPICS = {
   GOVERNANCE_COMMAND: 'governance.command',
 };
 
-// Kafka client singleton
 const kafka = new Kafka({
   clientId: process.env.KAFKA_CLIENT_ID || 'project42-governance',
   brokers: (process.env.KAFKA_BROKERS || 'localhost:9092').split(','),
-  logLevel: logLevel.WARN,
+  logLevel: logLevel.ERROR,
+  retry: {
+    initialRetryTime: 5000,
+    retries: 30,
+    maxRetryTime: 60000,
+    factor: 1.5,
+  },
 });
 
-/**
- * Create and connect a Kafka producer
- */
+async function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 async function createProducer() {
   const producer = kafka.producer();
   await producer.connect();
@@ -30,42 +35,44 @@ async function createProducer() {
   return producer;
 }
 
-/**
- * Create and connect a Kafka consumer
- * @param {string} groupId - Consumer group ID
- */
 async function createConsumer(groupId) {
   const consumer = kafka.consumer({
     groupId: groupId || process.env.KAFKA_GROUP_ID || 'governance-group',
+    retry: {
+      initialRetryTime: 5000,
+      retries: 30,
+      maxRetryTime: 60000,
+    },
   });
   await consumer.connect();
   logger.info(`Kafka consumer connected [group: ${groupId}]`);
   return consumer;
 }
 
-/**
- * Create all required Kafka topics (run once on init)
- */
 async function createTopics() {
   const admin = kafka.admin();
   await admin.connect();
+
+  // Wait for Kafka leader election to complete
+  await sleep(10000);
+
   const existing = await admin.listTopics();
   const toCreate = Object.values(TOPICS)
-    .filter((t) => !existing.includes(t))
-    .map((topic) => ({ topic, numPartitions: 3, replicationFactor: 1 }));
+    .filter(t => !existing.includes(t))
+    .map(topic => ({ topic, numPartitions: 1, replicationFactor: 1 }));
 
   if (toCreate.length > 0) {
-    await admin.createTopics({ topics: toCreate });
-    logger.info(`Created Kafka topics: ${toCreate.map((t) => t.topic).join(', ')}`);
+    await admin.createTopics({ topics: toCreate, waitForLeaders: true });
+    logger.info(`Created Kafka topics: ${toCreate.map(t => t.topic).join(', ')}`);
   } else {
     logger.info('All Kafka topics already exist');
   }
+
+  // Extra wait after topic creation for leader election
+  await sleep(5000);
   await admin.disconnect();
 }
 
-/**
- * Helper to publish a message to a topic
- */
 async function publish(producer, topic, payload) {
   await producer.send({
     topic,

@@ -11,7 +11,7 @@
     "agent:security": "node agents/security/index.js",
     "agent:performance": "node agents/performance/index.js",
     "agent:refactoring": "node agents/refactoring/index.js",
-    "start:all": "concurrently -k --delay 5000 \"npm run start\" \"npm run agent:discovery\" \"npm run agent:dependency\" \"npm run agent:security\" \"npm run agent:performance\" \"npm run agent:refactoring\""
+    "start:all": "concurrently -k --delay 30000 \"npm run start\" \"npm run agent:discovery\" \"npm run agent:dependency\" \"npm run agent:security\" \"npm run agent:performance\" \"npm run agent:refactoring\""
   },
   "dependencies": {
     "express": "^4.18.2",

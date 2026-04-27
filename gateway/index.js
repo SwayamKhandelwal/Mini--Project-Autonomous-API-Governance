@@ -80,12 +80,22 @@ app.use((req, res) => {
 });
 
 // ─── Bootstrap ───────────────────────────────────────────────────────────
+async function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
 async function bootstrap() {
   try {
     logger.info('Initializing Project42 Gateway...', { service: 'gateway' });
 
-    // Setup Kafka topics
-    await createTopics();
+    // Retry Kafka until ready
+    while (true) {
+      try {
+        await createTopics();
+        break;
+      } catch (err) {
+        logger.warn('Kafka not ready, retrying in 10s...', { service: 'gateway' });
+        await sleep(10000);
+      }
+    }
 
     // Setup Neo4j schema
     await initSchema();
