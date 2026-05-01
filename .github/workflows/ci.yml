@@ -1,0 +1,62 @@
+name: CI - Project 42
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: Run Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Check all files syntax
+        run: |
+          node --check gateway/index.js
+          node --check gateway/routes/health.js
+          node --check gateway/routes/discovery.js
+          node --check gateway/routes/dependency.js
+          node --check gateway/routes/security.js
+          node --check gateway/routes/performance.js
+          node --check gateway/routes/refactoring.js
+          node --check agents/discovery/index.js
+          node --check agents/dependency/index.js
+          node --check agents/security/index.js
+          node --check agents/performance/index.js
+          node --check agents/refactoring/index.js
+          node --check shared/kafka/index.js
+          node --check shared/neo4j/index.js
+          node --check shared/logger/index.js
+
+      - name: Verify package.json
+        run: node -e "require('./package.json')"
+
+      - name: Check all dependencies installed
+        run: node -e "
+          require('express');
+          require('kafkajs');
+          require('neo4j-driver');
+          require('winston');
+          require('@google/generative-ai');
+          require('uuid');
+          require('cors');
+          require('helmet');
+          require('prom-client');
+          console.log('All dependencies OK');
+          "
